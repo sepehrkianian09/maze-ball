@@ -6,7 +6,7 @@ import 'package:flutter/material.dart';
 
 import 'background.dart';
 import 'ball.dart';
-import 'ground.dart';
+import 'maze_tile.dart';
 
 class MazeBallGame extends Forge2DGame {
   MazeBallGame()
@@ -22,7 +22,7 @@ class MazeBallGame extends Forge2DGame {
 
     final gameRect = camera.visibleWorldRect;
     await world.add(
-      Ground(
+      MazeTile(
         position: Vector2(0, gameRect.bottom - 4),
         size: Vector2(10, 2),
         color: Colors.amber,
