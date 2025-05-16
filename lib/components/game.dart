@@ -14,7 +14,7 @@ class MazeBallGame extends Forge2DGame {
 
   @override
   FutureOr<void> onLoad() async {
-    final backgroundImage = await images.load('colored_shroom.png');
+    final backgroundImage = await images.load('background/colored_grass.png');
     await world.add(Background(sprite: Sprite(backgroundImage)));
 
     return super.onLoad();
