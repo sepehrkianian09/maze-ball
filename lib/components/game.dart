@@ -24,7 +24,7 @@ class MazeBallGame extends Forge2DGame {
     await world.add(
       Ground(
         position: Vector2(0, gameRect.bottom - 4),
-        size: Vector2(10, 8),
+        size: Vector2(10, 2),
         color: Colors.amber,
       ),
     );

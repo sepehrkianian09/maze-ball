@@ -23,7 +23,19 @@ class Ground extends BodyComponent {
            ),
          ],
          children: [
-          RectangleComponent(anchor: Anchor.center, paint: Paint()..color = color, size: size)
-         ]
+           RectangleComponent(
+             anchor: Anchor.center,
+             size: size,
+             paintLayers: [
+               Paint()
+                 ..color = Colors.white70
+                 ..strokeWidth = 1
+                 ..style = PaintingStyle.stroke,
+               Paint()
+                 ..color = color
+                 ..style = PaintingStyle.fill,
+             ],
+           ),
+         ],
        );
 }
