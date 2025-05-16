@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flame/components.dart';
 import 'package:flame_forge2d/body_component.dart';
 import 'package:flame_forge2d/flame_forge2d.dart';
@@ -22,6 +24,7 @@ class Maze extends BodyComponent<MazeBallGame> {
           ),
           size: tileSize,
           color: Colors.amber,
+          angle: pi / 2
         ),
       );
     }
