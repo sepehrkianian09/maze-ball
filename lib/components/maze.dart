@@ -20,18 +20,42 @@ class Maze extends BodyComponent<MazeBallGame> {
 
   @override
   Future<void> onLoad() async {
+    final verticalItemsLength = 4;
+    final horizontalItemsLength = 4;
+    final maximumNumberOfTiles = verticalItemsLength * horizontalItemsLength;
+
     final gameRect = game.camera.visibleWorldRect;
     final gameWidth = gameRect.right - gameRect.left;
-    for (var i = 0; i <= 4; i++) {
-      final tileSize = Vector2(10, 2);
-      randomAngle() =>
-          MazeTileAngle.values[Random().nextInt(MazeTileAngle.values.length)];
+    final gameWidthStart = gameRect.left;
+    final gameHeight = gameRect.top - gameRect.bottom;
+    final gameHeightStart = gameRect.bottom;
+
+    final tileSize = Vector2(10, 2);
+
+    final theRandom = Random();
+
+    randomAngle() =>
+        MazeTileAngle.values[theRandom.nextInt(MazeTileAngle.values.length)];
+
+    final numberOfTiles = theRandom.nextInt(maximumNumberOfTiles);
+    for (var i = 0; i <= numberOfTiles; i++) {
       final angle = randomAngle();
+      final tileHorizontalPosition =
+          gameWidthStart +
+          theRandom.nextInt(horizontalItemsLength) *
+              gameWidth /
+              horizontalItemsLength;
+      final tileVerticalPosition =
+          gameHeightStart +
+          theRandom.nextInt(verticalItemsLength) *
+              gameHeight /
+              verticalItemsLength;
       await add(
         MazeTile(
           position: Vector2(
-            gameRect.left + (i * gameWidth / 4) + (angle == MazeTileAngle.perpendicular ? 0 : tileSize.x / 2),
-            gameRect.bottom - 4,
+            tileHorizontalPosition +
+                (angle == MazeTileAngle.perpendicular ? 0 : tileSize.x / 2),
+            tileVerticalPosition - 4,
           ),
           size: tileSize,
           color: Colors.amber,
