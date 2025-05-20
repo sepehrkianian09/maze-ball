@@ -18,6 +18,15 @@ enum MazeTileAngle {
 class Maze extends BodyComponent<MazeBallGame> {
   Maze() : super(bodyDef: BodyDef());
 
+  double _randomPosition(
+    Random theRandom,
+    double start,
+    double length,
+    int divisionLength,
+  ) {
+    return start + theRandom.nextInt(divisionLength) * length / divisionLength;
+  }
+
   @override
   Future<void> onLoad() async {
     final verticalItemsLength = 4;
@@ -40,16 +49,18 @@ class Maze extends BodyComponent<MazeBallGame> {
     final numberOfTiles = theRandom.nextInt(maximumNumberOfTiles);
     for (var i = 0; i <= numberOfTiles; i++) {
       final angle = randomAngle();
-      final tileHorizontalPosition =
-          gameWidthStart +
-          theRandom.nextInt(horizontalItemsLength) *
-              gameWidth /
-              horizontalItemsLength;
-      final tileVerticalPosition =
-          gameHeightStart +
-          theRandom.nextInt(verticalItemsLength) *
-              gameHeight /
-              verticalItemsLength;
+      final tileHorizontalPosition = _randomPosition(
+        theRandom,
+        gameWidthStart,
+        gameWidth,
+        horizontalItemsLength,
+      );
+      final tileVerticalPosition = _randomPosition(
+        theRandom,
+        gameHeightStart,
+        gameHeight,
+        verticalItemsLength,
+      );
       await add(
         MazeTile(
           position: Vector2(
