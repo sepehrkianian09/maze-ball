@@ -27,6 +27,25 @@ class Maze extends BodyComponent<MazeBallGame> {
     return start + theRandom.nextInt(divisionLength) * length / divisionLength;
   }
 
+  final tileSize = Vector2(10, 2);
+
+  MazeTile _createMazeTile(
+    double horizontalPosition,
+    double verticalPosition,
+    MazeTileAngle angle,
+  ) {
+    return MazeTile(
+      position: Vector2(
+        horizontalPosition +
+            (angle == MazeTileAngle.perpendicular ? 0 : tileSize.x / 2),
+        verticalPosition - 4,
+      ),
+      size: tileSize,
+      color: Colors.amber,
+      angle: angle.value,
+    );
+  }
+
   @override
   Future<void> onLoad() async {
     final verticalItemsLength = 4;
@@ -38,8 +57,6 @@ class Maze extends BodyComponent<MazeBallGame> {
     final gameWidthStart = gameRect.left;
     final gameHeight = gameRect.top - gameRect.bottom;
     final gameHeightStart = gameRect.bottom;
-
-    final tileSize = Vector2(10, 2);
 
     final theRandom = Random();
 
@@ -62,16 +79,7 @@ class Maze extends BodyComponent<MazeBallGame> {
         verticalItemsLength,
       );
       await add(
-        MazeTile(
-          position: Vector2(
-            tileHorizontalPosition +
-                (angle == MazeTileAngle.perpendicular ? 0 : tileSize.x / 2),
-            tileVerticalPosition - 4,
-          ),
-          size: tileSize,
-          color: Colors.amber,
-          angle: angle.value,
-        ),
+        _createMazeTile(tileHorizontalPosition, tileVerticalPosition, angle),
       );
     }
 
