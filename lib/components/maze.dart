@@ -35,11 +35,7 @@ class Maze extends BodyComponent<MazeBallGame> {
     MazeTileAngle angle,
   ) {
     return MazeTile(
-      position: Vector2(
-        horizontalPosition +
-            (angle == MazeTileAngle.perpendicular ? 0 : tileSize.x / 2),
-        verticalPosition - 4,
-      ),
+      position: Vector2(horizontalPosition, verticalPosition),
       size: tileSize,
       color: Colors.amber,
       angle: angle.value,
@@ -48,9 +44,8 @@ class Maze extends BodyComponent<MazeBallGame> {
 
   @override
   Future<void> onLoad() async {
-    final verticalItemsLength = 4;
     final horizontalItemsLength = 4;
-    final maximumNumberOfTiles = verticalItemsLength * horizontalItemsLength;
+    final verticalItemsLength = horizontalItemsLength + 1;
 
     final gameRect = game.camera.visibleWorldRect;
     final gameWidth = gameRect.right - gameRect.left;
@@ -58,11 +53,47 @@ class Maze extends BodyComponent<MazeBallGame> {
     final gameHeight = gameRect.top - gameRect.bottom;
     final gameHeightStart = gameRect.bottom;
 
+    // add bound
+    for (var i = 0; i <= horizontalItemsLength; i++) {
+      await add(
+        _createMazeTile(
+          gameWidthStart + i * gameWidth / horizontalItemsLength,
+          gameHeightStart,
+          MazeTileAngle.zero,
+        ),
+      );
+      await add(
+        _createMazeTile(
+          gameWidthStart + i * gameWidth / horizontalItemsLength,
+          gameHeightStart + gameHeight,
+          MazeTileAngle.zero,
+        ),
+      );
+    }
+    for (var i = 0; i <= verticalItemsLength; i++) {
+      await add(
+        _createMazeTile(
+          gameWidthStart,
+          gameHeightStart + i * gameHeight / verticalItemsLength,
+          MazeTileAngle.perpendicular,
+        ),
+      );
+      await add(
+        _createMazeTile(
+          gameWidthStart + gameWidth,
+          gameHeightStart + i * gameHeight / verticalItemsLength,
+          MazeTileAngle.perpendicular,
+        ),
+      );
+    }
+
     final theRandom = Random();
 
     randomAngle() =>
         MazeTileAngle.values[theRandom.nextInt(MazeTileAngle.values.length)];
 
+    final maximumNumberOfTiles = verticalItemsLength * horizontalItemsLength;
+    print("maximum $maximumNumberOfTiles");
     final numberOfTiles = theRandom.nextInt(maximumNumberOfTiles);
     for (var i = 0; i <= numberOfTiles; i++) {
       final angle = randomAngle();
