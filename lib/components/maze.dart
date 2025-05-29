@@ -19,7 +19,88 @@ enum MazeTileAngle {
   const MazeTileAngle(this.value);
 }
 
+class MazeTileFactory {
+  final double _gameWidth;
+  final double _gameHeight;
+
+  final int _horizontalLength;
+  final int _verticalLength;
+
+  final double _gameWidthStart;
+  final double _gameHeightStart;
+
+  MazeTileFactory({
+    required double gameWidth,
+    required double gameHeight,
+    required int horizontalLength,
+    required int verticalLength,
+    required double gameWidthStart,
+    required double gameHeightStart,
+  }) : _gameHeightStart = gameHeightStart,
+       _gameWidthStart = gameWidthStart,
+       _verticalLength = verticalLength,
+       _horizontalLength = horizontalLength,
+       _gameHeight = gameHeight,
+       _gameWidth = gameWidth;
+
+  final _tileSize = Vector2(12, 2);
+
+  Vector2 get tileSpace {
+    return Vector2(
+      _gameWidth / _horizontalLength - _tileSize.x,
+      _gameHeight / _verticalLength - _tileSize.x,
+    );
+  }
+
+  MazeTile createTile(int i, int j, MazeTileAngle angle) {
+    double horizontalPosition = 0.0;
+    double verticalPosition = 0.0;
+
+    switch (angle) {
+      case MazeTileAngle.zero:
+        horizontalPosition =
+            _gameWidthStart +
+            i * (_tileSize.x + tileSpace.x) +
+            _tileSize.x / 2.0 + tileSpace.x / 2.0;
+        verticalPosition = _gameHeightStart + j * (_tileSize.x + tileSpace.y);
+        break;
+      case MazeTileAngle.perpendicular:
+        horizontalPosition =
+            _gameWidthStart + i * (_tileSize.x + tileSpace.x);
+        verticalPosition =
+            _gameHeightStart +
+            j * (_tileSize.x + tileSpace.y) +
+            _tileSize.x / 2.0 + tileSpace.y / 2.0;
+        break;
+    }
+
+    return MazeTile(
+      position: Vector2(horizontalPosition, verticalPosition),
+      size: _tileSize,
+      color: Colors.amber,
+      angle: angle.value,
+    );
+  }
+}
+
 class Maze extends BodyComponent<MazeBallGame> with KeyboardHandler {
+  MazeTileFactory get _mazeTileFactory {
+    final gameRect = game.camera.visibleWorldRect;
+    final gameWidth = gameRect.right - gameRect.left;
+    final gameWidthStart = gameRect.left;
+    final gameHeight = gameRect.bottom - gameRect.top;
+    final gameHeightStart = gameRect.top;
+
+    return MazeTileFactory(
+      gameWidth: gameWidth,
+      gameHeight: gameHeight,
+      horizontalLength: 4,
+      verticalLength: 4,
+      gameWidthStart: gameWidthStart,
+      gameHeightStart: gameHeightStart,
+    );
+  }
+
   Maze()
     : super(
         bodyDef: BodyDef(
@@ -28,92 +109,20 @@ class Maze extends BodyComponent<MazeBallGame> with KeyboardHandler {
         ),
       );
 
-  double _randomPosition(
-    Random theRandom,
-    double start,
-    double length,
-    int divisionLength,
-  ) {
-    return start + theRandom.nextInt(divisionLength) * length / divisionLength;
-  }
-
-  final tileSize = Vector2(10, 2);
-
-  MazeTile _createMazeTile(
-    double horizontalPosition,
-    double verticalPosition,
-    MazeTileAngle angle,
-  ) {
-    switch (angle) {
-      case MazeTileAngle.zero:
-        horizontalPosition += 5;
-        break;
-      case MazeTileAngle.perpendicular:
-        verticalPosition += 5;
-        break;
-    }
-    return MazeTile(
-      position: Vector2(horizontalPosition, verticalPosition),
-      size: tileSize,
-      color: Colors.amber,
-      angle: angle.value,
-    );
-  }
-
   Future<void> _buildMazeBound(
     int horizontalItemsLength,
     int verticalItemsLength,
   ) async {
-    final gameRect = game.camera.visibleWorldRect;
-    final gameWidth = gameRect.right - gameRect.left;
-    final gameWidthStart = gameRect.left;
-    final gameHeight = gameRect.bottom - gameRect.top;
-    final gameHeightStart = gameRect.top;
-
     // add horizontal walls
-    final widthSpace = gameWidth / horizontalItemsLength - tileSize.x;
     for (var i = 0; i < horizontalItemsLength; i++) {
-      await add(
-        _createMazeTile(
-          widthSpace / 2 +
-              gameWidthStart +
-              i * gameWidth / horizontalItemsLength,
-          gameHeightStart,
-          MazeTileAngle.zero,
-        ),
-      );
-      await add(
-        _createMazeTile(
-          widthSpace / 2 +
-              gameWidthStart +
-              i * gameWidth / horizontalItemsLength,
-          gameHeightStart + gameHeight,
-          MazeTileAngle.zero,
-        ),
-      );
+      await add(_mazeTileFactory.createTile(i, 0, MazeTileAngle.zero));
+      await add(_mazeTileFactory.createTile(i, 4, MazeTileAngle.zero));
     }
 
     // add vertical walls
-    final heightSpace = gameHeight / verticalItemsLength - tileSize.x;
-    for (var i = 0; i < verticalItemsLength; i++) {
-      await add(
-        _createMazeTile(
-          gameWidthStart,
-          heightSpace / 2 +
-              gameHeightStart +
-              i * gameHeight / verticalItemsLength,
-          MazeTileAngle.perpendicular,
-        ),
-      );
-      await add(
-        _createMazeTile(
-          gameWidthStart + gameWidth,
-          heightSpace / 2 +
-              gameHeightStart +
-              i * gameHeight / verticalItemsLength,
-          MazeTileAngle.perpendicular,
-        ),
-      );
+    for (var j = 0; j < verticalItemsLength; j++) {
+      await add(_mazeTileFactory.createTile(0, j, MazeTileAngle.perpendicular));
+      await add(_mazeTileFactory.createTile(4, j, MazeTileAngle.perpendicular));
     }
   }
 
@@ -122,12 +131,6 @@ class Maze extends BodyComponent<MazeBallGame> with KeyboardHandler {
     int verticalItemsLength,
     Random theRandom,
   ) async {
-    final gameRect = game.camera.visibleWorldRect;
-    final gameWidth = gameRect.right - gameRect.left;
-    final gameWidthStart = gameRect.left;
-    final gameHeight = gameRect.bottom - gameRect.top;
-    final gameHeightStart = gameRect.top;
-
     randomAngle() =>
         MazeTileAngle.values[theRandom.nextInt(MazeTileAngle.values.length)];
 
@@ -138,44 +141,19 @@ class Maze extends BodyComponent<MazeBallGame> with KeyboardHandler {
     print("number of random tiles: $numberOfTiles");
     final addedTileCoordinates = [];
 
-    final widthSpace = gameWidth / horizontalItemsLength - tileSize.x;
-    final heightSpace = gameHeight / verticalItemsLength - tileSize.x;
     var i = 0;
     while (i < numberOfTiles) {
-      double tileHorizontalPosition = 0;
-      double tileVerticalPosition = 0;
-
       final angle = randomAngle();
+
+      int tileHorizontalPosition = 0;
+      int tileVerticalPosition = 0;
       if (angle == MazeTileAngle.zero) {
-        tileHorizontalPosition =
-            widthSpace / 2 +
-            _randomPosition(
-              theRandom,
-              gameWidthStart,
-              gameWidth,
-              horizontalItemsLength,
-            );
-        tileVerticalPosition = _randomPosition(
-          theRandom,
-          gameHeightStart + gameHeight / verticalItemsLength,
-          gameHeight - gameHeight / verticalItemsLength,
-          verticalItemsLength - 1,
-        );
+        tileHorizontalPosition = theRandom.nextInt(horizontalItemsLength);
+        tileVerticalPosition = 1 + theRandom.nextInt(verticalItemsLength - 1);
       } else if (angle == MazeTileAngle.perpendicular) {
-        tileHorizontalPosition = _randomPosition(
-          theRandom,
-          gameWidthStart + gameWidth / horizontalItemsLength,
-          gameWidth - gameWidth / horizontalItemsLength,
-          horizontalItemsLength - 1,
-        );
-        tileVerticalPosition =
-            heightSpace / 2 +
-            _randomPosition(
-              theRandom,
-              gameHeightStart,
-              gameHeight,
-              verticalItemsLength,
-            );
+        tileHorizontalPosition =
+            1 + theRandom.nextInt(horizontalItemsLength - 1);
+        tileVerticalPosition = theRandom.nextInt(verticalItemsLength);
       }
       final tileCoordinates = (
         angle,
@@ -189,7 +167,11 @@ class Maze extends BodyComponent<MazeBallGame> with KeyboardHandler {
       addedTileCoordinates.add(tileCoordinates);
       print("added tile coordinates: $tileCoordinates");
       await add(
-        _createMazeTile(tileHorizontalPosition, tileVerticalPosition, angle),
+        _mazeTileFactory.createTile(
+          tileHorizontalPosition,
+          tileVerticalPosition,
+          angle,
+        ),
       );
       i++;
     }
