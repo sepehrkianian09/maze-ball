@@ -60,11 +60,10 @@ class Maze extends BodyComponent<MazeBallGame> with KeyboardHandler {
     );
   }
 
-  @override
-  Future<void> onLoad() async {
-    final horizontalItemsLength = 4;
-    final verticalItemsLength = 4;
-
+  Future<void> _buildMazeBound(
+    int horizontalItemsLength,
+    int verticalItemsLength,
+  ) async {
     final gameRect = game.camera.visibleWorldRect;
     final gameWidth = gameRect.right - gameRect.left;
     final gameWidthStart = gameRect.left;
@@ -104,15 +103,27 @@ class Maze extends BodyComponent<MazeBallGame> with KeyboardHandler {
         ),
       );
     }
+  }
 
-    final theRandom = Random();
+  Future<void> _buildRandomTiles(
+    int horizontalItemsLength,
+    int verticalItemsLength,
+    Random theRandom,
+  ) async {
+    final gameRect = game.camera.visibleWorldRect;
+    final gameWidth = gameRect.right - gameRect.left;
+    final gameWidthStart = gameRect.left;
+    final gameHeight = gameRect.bottom - gameRect.top;
+    final gameHeightStart = gameRect.top;
 
     randomAngle() =>
         MazeTileAngle.values[theRandom.nextInt(MazeTileAngle.values.length)];
 
     final maximumNumberOfTiles = verticalItemsLength * horizontalItemsLength;
     print("maximum $maximumNumberOfTiles");
-    int numberOfTiles = (maximumNumberOfTiles/2 as int) + theRandom.nextInt(maximumNumberOfTiles/2 as int);
+    int numberOfTiles =
+        (maximumNumberOfTiles / 2 as int) +
+        theRandom.nextInt(maximumNumberOfTiles / 2 as int);
     for (var i = 0; i < numberOfTiles; i++) {
       final angle = randomAngle();
       final tileHorizontalPosition = _randomPosition(
@@ -131,6 +142,20 @@ class Maze extends BodyComponent<MazeBallGame> with KeyboardHandler {
         _createMazeTile(tileHorizontalPosition, tileVerticalPosition, angle),
       );
     }
+  }
+
+  @override
+  Future<void> onLoad() async {
+    final horizontalItemsLength = 4;
+    final verticalItemsLength = 4;
+
+    await _buildMazeBound(horizontalItemsLength, verticalItemsLength);
+
+    await _buildRandomTiles(
+      horizontalItemsLength,
+      verticalItemsLength,
+      Random(),
+    );
 
     return super.onLoad();
   }
