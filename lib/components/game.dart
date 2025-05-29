@@ -11,7 +11,7 @@ import 'package:maze_ball/components/maze.dart';
 
 import 'background.dart';
 import 'ball.dart';
-import 'maze_tile.dart';
+import 'maze/tile.dart';
 
 class MazeBallGame extends Forge2DGame with KeyboardEvents {
   MazeBallGame()
