@@ -4,8 +4,12 @@ import 'package:flame/components.dart';
 import 'package:flame_forge2d/body_component.dart';
 import 'package:flame_forge2d/flame_forge2d.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:flutter/src/services/keyboard_key.g.dart';
 import 'package:maze_ball/components/game.dart';
 import 'package:maze_ball/components/maze_tile.dart';
+
+import 'ball.dart';
 
 enum MazeTileAngle {
   zero(0),
@@ -15,8 +19,14 @@ enum MazeTileAngle {
   const MazeTileAngle(this.value);
 }
 
-class Maze extends BodyComponent<MazeBallGame> {
-  Maze() : super(bodyDef: BodyDef());
+class Maze extends BodyComponent<MazeBallGame> with KeyboardHandler {
+  Maze()
+    : super(
+        bodyDef: BodyDef(
+          type: BodyType.static,
+          gravityOverride: Vector2.zero(),
+        ),
+      );
 
   double _randomPosition(
     Random theRandom,
@@ -34,6 +44,14 @@ class Maze extends BodyComponent<MazeBallGame> {
     double verticalPosition,
     MazeTileAngle angle,
   ) {
+    switch (angle) {
+      case MazeTileAngle.zero:
+        horizontalPosition += 5;
+        break;
+      case MazeTileAngle.perpendicular:
+        verticalPosition += 5;
+        break;
+    }
     return MazeTile(
       position: Vector2(horizontalPosition, verticalPosition),
       size: tileSize,
@@ -45,16 +63,16 @@ class Maze extends BodyComponent<MazeBallGame> {
   @override
   Future<void> onLoad() async {
     final horizontalItemsLength = 4;
-    final verticalItemsLength = horizontalItemsLength + 1;
+    final verticalItemsLength = 4;
 
     final gameRect = game.camera.visibleWorldRect;
     final gameWidth = gameRect.right - gameRect.left;
     final gameWidthStart = gameRect.left;
-    final gameHeight = gameRect.top - gameRect.bottom;
-    final gameHeightStart = gameRect.bottom;
+    final gameHeight = gameRect.bottom - gameRect.top;
+    final gameHeightStart = gameRect.top;
 
     // add bound
-    for (var i = 0; i <= horizontalItemsLength; i++) {
+    for (var i = 0; i < horizontalItemsLength; i++) {
       await add(
         _createMazeTile(
           gameWidthStart + i * gameWidth / horizontalItemsLength,
@@ -70,7 +88,7 @@ class Maze extends BodyComponent<MazeBallGame> {
         ),
       );
     }
-    for (var i = 0; i <= verticalItemsLength; i++) {
+    for (var i = 0; i < verticalItemsLength; i++) {
       await add(
         _createMazeTile(
           gameWidthStart,
@@ -95,7 +113,7 @@ class Maze extends BodyComponent<MazeBallGame> {
     final maximumNumberOfTiles = verticalItemsLength * horizontalItemsLength;
     print("maximum $maximumNumberOfTiles");
     final numberOfTiles = theRandom.nextInt(maximumNumberOfTiles);
-    for (var i = 0; i <= numberOfTiles; i++) {
+    for (var i = 0; i < numberOfTiles; i++) {
       final angle = randomAngle();
       final tileHorizontalPosition = _randomPosition(
         theRandom,

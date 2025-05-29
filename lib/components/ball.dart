@@ -13,7 +13,11 @@ class Ball extends BodyComponent {
     required MaterialColor color,
   }) : super(
          bodyDef:
-             BodyDef(gravityOverride: Vector2(0, 10.0))
+             BodyDef(
+                 gravityOverride: Vector2(0, 10.0),
+                 isAwake: true,
+                 allowSleep: false,
+               )
                ..position = position
                ..type = BodyType.dynamic,
          fixtureDefs: [

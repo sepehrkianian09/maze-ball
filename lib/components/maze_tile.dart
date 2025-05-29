@@ -13,10 +13,11 @@ class MazeTile extends BodyComponent {
     required MaterialColor color,
     double angle = 0,
   }) : super(
-         bodyDef:
-             BodyDef(angle: angle)
-               ..position = position
-               ..type = BodyType.static,
+         bodyDef: BodyDef(
+           angle: angle,
+           type: BodyType.static,
+           gravityOverride: Vector2.zero(),
+         )..position = position,
          fixtureDefs: [
            FixtureDef(
              PolygonShape()..setAsBoxXY(size.x / 2, size.y / 2),
