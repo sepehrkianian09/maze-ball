@@ -70,35 +70,43 @@ class Maze extends BodyComponent<MazeBallGame> with KeyboardHandler {
     final gameHeight = gameRect.bottom - gameRect.top;
     final gameHeightStart = gameRect.top;
 
-    // add bound
+    // add horizontal walls
+    final widthSpace = gameWidth / horizontalItemsLength - tileSize.x;
     for (var i = 0; i < horizontalItemsLength; i++) {
       await add(
         _createMazeTile(
-          gameWidthStart + i * gameWidth / horizontalItemsLength,
+          widthSpace / 2 +
+              gameWidthStart +
+              i * gameWidth / horizontalItemsLength,
           gameHeightStart,
           MazeTileAngle.zero,
         ),
       );
       await add(
         _createMazeTile(
-          gameWidthStart + i * gameWidth / horizontalItemsLength,
+          widthSpace / 2 +
+              gameWidthStart +
+              i * gameWidth / horizontalItemsLength,
           gameHeightStart + gameHeight,
           MazeTileAngle.zero,
         ),
       );
     }
+
+    // add vertical walls
+    final heightSpace = gameHeight / verticalItemsLength - tileSize.x;
     for (var i = 0; i < verticalItemsLength; i++) {
       await add(
         _createMazeTile(
           gameWidthStart,
-          gameHeightStart + i * gameHeight / verticalItemsLength,
+          heightSpace / 2 + gameHeightStart + i * gameHeight / verticalItemsLength,
           MazeTileAngle.perpendicular,
         ),
       );
       await add(
         _createMazeTile(
           gameWidthStart + gameWidth,
-          gameHeightStart + i * gameHeight / verticalItemsLength,
+          heightSpace / 2 + gameHeightStart + i * gameHeight / verticalItemsLength,
           MazeTileAngle.perpendicular,
         ),
       );
