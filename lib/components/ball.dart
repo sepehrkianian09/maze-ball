@@ -1,3 +1,4 @@
+
 import 'package:flame/components.dart';
 import 'package:flame/game.dart';
 import 'package:flame_forge2d/body_component.dart';
@@ -15,8 +16,10 @@ class Ball extends BodyComponent {
          bodyDef:
              BodyDef(
                  gravityOverride: Vector2(0, 10.0),
+                 gravityScale: Vector2(1.0, 1.0),
                  isAwake: true,
                  allowSleep: false,
+                 fixedRotation: true,
                )
                ..position = position
                ..type = BodyType.dynamic,

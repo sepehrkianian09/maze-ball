@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:math';
 
 import 'package:flame/components.dart';
 import 'package:flame/events.dart';
@@ -45,9 +46,11 @@ class MazeBallGame extends Forge2DGame with KeyboardEvents {
 
     if (isKeyDown) {
       if (keysPressed.contains(LogicalKeyboardKey.arrowRight)) {
-        _ball.body.gravityOverride?.rotate(radians(90));
+        _ball.body.gravityOverride?.rotate(pi / 2);
+        _ball.body.linearVelocity.setZero();
       } else if (keysPressed.contains(LogicalKeyboardKey.arrowLeft)) {
-        _ball.body.gravityOverride?.rotate(radians(-90));
+        _ball.body.gravityOverride?.rotate(- pi / 2);
+        _ball.body.linearVelocity.setZero();
       }
 
       return KeyEventResult.handled;
