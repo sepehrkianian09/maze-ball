@@ -19,6 +19,9 @@ enum MazeTileAngle {
   const MazeTileAngle(this.value);
 }
 
+int horizontalItemsLength = 4;
+int verticalItemsLength = 4;
+
 class MazeTileFactory {
   final double _gameWidth;
   final double _gameHeight;
@@ -61,16 +64,17 @@ class MazeTileFactory {
         horizontalPosition =
             _gameWidthStart +
             i * (_tileSize.x + tileSpace.x) +
-            _tileSize.x / 2.0 + tileSpace.x / 2.0;
+            _tileSize.x / 2.0 +
+            tileSpace.x / 2.0;
         verticalPosition = _gameHeightStart + j * (_tileSize.x + tileSpace.y);
         break;
       case MazeTileAngle.perpendicular:
-        horizontalPosition =
-            _gameWidthStart + i * (_tileSize.x + tileSpace.x);
+        horizontalPosition = _gameWidthStart + i * (_tileSize.x + tileSpace.x);
         verticalPosition =
             _gameHeightStart +
             j * (_tileSize.x + tileSpace.y) +
-            _tileSize.x / 2.0 + tileSpace.y / 2.0;
+            _tileSize.x / 2.0 +
+            tileSpace.y / 2.0;
         break;
     }
 
@@ -109,28 +113,29 @@ class Maze extends BodyComponent<MazeBallGame> with KeyboardHandler {
         ),
       );
 
-  Future<void> _buildMazeBound(
-    int horizontalItemsLength,
-    int verticalItemsLength,
-  ) async {
+  Future<void> _buildMazeBound() async {
     // add horizontal walls
     for (var i = 0; i < horizontalItemsLength; i++) {
       await add(_mazeTileFactory.createTile(i, 0, MazeTileAngle.zero));
-      await add(_mazeTileFactory.createTile(i, 4, MazeTileAngle.zero));
+      await add(
+        _mazeTileFactory.createTile(i, verticalItemsLength, MazeTileAngle.zero),
+      );
     }
 
     // add vertical walls
     for (var j = 0; j < verticalItemsLength; j++) {
       await add(_mazeTileFactory.createTile(0, j, MazeTileAngle.perpendicular));
-      await add(_mazeTileFactory.createTile(4, j, MazeTileAngle.perpendicular));
+      await add(
+        _mazeTileFactory.createTile(
+          horizontalItemsLength,
+          j,
+          MazeTileAngle.perpendicular,
+        ),
+      );
     }
   }
 
-  Future<void> _buildRandomTiles(
-    int horizontalItemsLength,
-    int verticalItemsLength,
-    Random theRandom,
-  ) async {
+  Future<void> _buildRandomTiles(Random theRandom) async {
     randomAngle() =>
         MazeTileAngle.values[theRandom.nextInt(MazeTileAngle.values.length)];
 
@@ -179,16 +184,8 @@ class Maze extends BodyComponent<MazeBallGame> with KeyboardHandler {
 
   @override
   Future<void> onLoad() async {
-    final horizontalItemsLength = 4;
-    final verticalItemsLength = 4;
-
-    await _buildMazeBound(horizontalItemsLength, verticalItemsLength);
-
-    await _buildRandomTiles(
-      horizontalItemsLength,
-      verticalItemsLength,
-      Random(),
-    );
+    await _buildMazeBound();
+    await _buildRandomTiles(Random());
 
     return super.onLoad();
   }
