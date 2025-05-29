@@ -128,23 +128,23 @@ class Maze extends BodyComponent<MazeBallGame> with KeyboardHandler {
         MazeTileAngle.values[theRandom.nextInt(MazeTileAngle.values.length)];
 
     final maximumNumberOfTiles = verticalItemsLength * horizontalItemsLength;
-    print("maximum $maximumNumberOfTiles");
     int numberOfTiles =
         (maximumNumberOfTiles / 2 as int) +
         theRandom.nextInt(maximumNumberOfTiles / 2 as int);
+    print("number of random tiles: $numberOfTiles");
     for (var i = 0; i < numberOfTiles; i++) {
       final angle = randomAngle();
       final tileHorizontalPosition = _randomPosition(
         theRandom,
-        gameWidthStart,
-        gameWidth,
-        horizontalItemsLength,
+        gameWidthStart + gameWidth / horizontalItemsLength,
+        gameWidth - gameWidth / horizontalItemsLength,
+        horizontalItemsLength - 2,
       );
       final tileVerticalPosition = _randomPosition(
         theRandom,
-        gameHeightStart,
-        gameHeight,
-        verticalItemsLength,
+        gameHeightStart + gameHeight / verticalItemsLength,
+        gameHeight - gameHeight / verticalItemsLength,
+        verticalItemsLength - 2,
       );
       await add(
         _createMazeTile(tileHorizontalPosition, tileVerticalPosition, angle),
