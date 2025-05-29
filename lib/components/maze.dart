@@ -82,14 +82,11 @@ class Maze extends BodyComponent<MazeBallGame> with KeyboardHandler {
     }
   }
 
-  Future<void> _buildRandomTiles(Random theRandom) async {
-    final maximumNumberOfTiles =
-        (horizontalItemsLength - 1) * (verticalItemsLength) +
-        (horizontalItemsLength) * (verticalItemsLength - 1);
-    int numberOfTiles = theRandom.nextInt(maximumNumberOfTiles / 2 as int);
-    print("number of random tiles: $numberOfTiles");
-    final addedTileCoordinates = [];
-
+  List<MazeTileCoordinates> _getRandomUniqueCoordinates(
+    int numberOfTiles,
+    Random theRandom,
+  ) {
+    List<MazeTileCoordinates> addedTileCoordinates = [];
     var i = 0;
     while (i < numberOfTiles) {
       final tileCoordinates = MazeTileCoordinates.randomInternal(
@@ -97,14 +94,29 @@ class Maze extends BodyComponent<MazeBallGame> with KeyboardHandler {
         horizontalItemsLength,
         verticalItemsLength,
       );
-      print("tile coordinates: $tileCoordinates");
+      // print("tile coordinates: $tileCoordinates");
       if (addedTileCoordinates.contains(tileCoordinates)) {
         continue;
       }
       addedTileCoordinates.add(tileCoordinates);
-      print("added tile coordinates: $tileCoordinates");
-      await add(_mazeTileFactory.createTile(tileCoordinates));
+      // print("added tile coordinates: $tileCoordinates");
       i++;
+    }
+    return addedTileCoordinates;
+  }
+
+  Future<void> _buildRandomTiles(Random theRandom) async {
+    final maximumNumberOfTiles =
+        (horizontalItemsLength - 1) * (verticalItemsLength) +
+        (horizontalItemsLength) * (verticalItemsLength - 1);
+    int numberOfTiles = theRandom.nextInt(maximumNumberOfTiles / 2 as int);
+    print("number of random tiles: $numberOfTiles");
+
+    for (var coordinate in _getRandomUniqueCoordinates(
+      numberOfTiles,
+      theRandom,
+    )) {
+      await add(_mazeTileFactory.createTile(coordinate));
     }
   }
 
