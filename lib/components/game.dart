@@ -75,6 +75,10 @@ class MazeBallGame extends Forge2DGame with KeyboardEvents {
     return super.onLoad();
   }
 
+  void finishGame() {
+    print("game finished");
+  }
+
   @override
   KeyEventResult onKeyEvent(
     KeyEvent event,
@@ -82,7 +86,7 @@ class MazeBallGame extends Forge2DGame with KeyboardEvents {
   ) {
     final isKeyDown = event is KeyDownEvent;
 
-    print("event pressed $event");
+    // print("event pressed $event");
 
     if (isKeyDown) {
       if (keysPressed.contains(LogicalKeyboardKey.arrowRight)) {

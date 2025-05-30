@@ -3,21 +3,22 @@ import 'package:flame/game.dart';
 import 'package:flame_forge2d/body_component.dart';
 import 'package:flame_forge2d/flame_forge2d.dart';
 import 'package:flutter/material.dart';
+import 'package:maze_ball/components/body_component_with_user_data.dart';
 
 final double ballRadius = 2.5;
 
-class Ball extends BodyComponent {
+class Ball extends BodyComponentWithUserData {
   Ball({required Vector2 position})
     : super(
         bodyDef:
             BodyDef(
+                type: BodyType.dynamic,
                 gravityOverride: Vector2(0, 10.0),
                 isAwake: true,
                 allowSleep: false,
                 fixedRotation: true,
               )
-              ..position = position
-              ..type = BodyType.dynamic,
+              ..position = position,
         fixtureDefs: [
           FixtureDef(CircleShape(radius: ballRadius), friction: 0.3),
         ],
