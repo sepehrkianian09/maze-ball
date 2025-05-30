@@ -11,6 +11,7 @@ dependencies:
     sdk: flutter
   flame: ^1.28.1
   flame_forge2d: ^0.19.0+1
+  get: # Use latest version
 
 
 dev_dependencies:
