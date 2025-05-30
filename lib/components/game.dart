@@ -8,6 +8,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/src/services/keyboard_key.g.dart';
 import 'package:maze_ball/components/maze.dart';
+import 'package:maze_ball/components/maze/cell_coordinates.dart';
+import 'package:maze_ball/components/maze/heart.dart';
 
 import 'background.dart';
 import 'ball.dart';
@@ -23,6 +25,23 @@ class MazeBallGame extends Forge2DGame with KeyboardEvents {
   final _maze = Maze();
   final _ball = Ball(position: Vector2.zero(), size: 10, color: Colors.brown);
 
+  CellCoordinatesConverter get cellCoordinatesConverter {
+    final gameRect = camera.visibleWorldRect;
+    final gameWidth = gameRect.right - gameRect.left;
+    final gameWidthStart = gameRect.left;
+    final gameHeight = gameRect.bottom - gameRect.top;
+    final gameHeightStart = gameRect.top;
+
+    return CellCoordinatesConverter(
+      gameWidth: gameWidth,
+      gameHeight: gameHeight,
+      horizontalLength: horizontalItemsLength,
+      verticalLength: verticalItemsLength,
+      gameWidthStart: gameWidthStart,
+      gameHeightStart: gameHeightStart,
+    );
+  }
+
   @override
   FutureOr<void> onLoad() async {
     final backgroundImage = await images.load('background/colored_grass.png');
@@ -31,6 +50,11 @@ class MazeBallGame extends Forge2DGame with KeyboardEvents {
     await world.add(_ball);
 
     await world.add(_maze);
+
+    Random theRandom = Random();
+    await world.add(
+      Heart(position: cellCoordinatesConverter.convert(CellCoordinates(theRandom.nextInt(horizontalItemsLength), theRandom.nextInt(verticalItemsLength)))),
+    );
 
     return super.onLoad();
   }
@@ -49,7 +73,7 @@ class MazeBallGame extends Forge2DGame with KeyboardEvents {
         _ball.body.gravityOverride?.rotate(pi / 2);
         _ball.body.linearVelocity.setZero();
       } else if (keysPressed.contains(LogicalKeyboardKey.arrowLeft)) {
-        _ball.body.gravityOverride?.rotate(- pi / 2);
+        _ball.body.gravityOverride?.rotate(-pi / 2);
         _ball.body.linearVelocity.setZero();
       }
 
