@@ -11,6 +11,7 @@ import 'package:get/get.dart';
 import 'package:maze_ball/components/maze.dart';
 import 'package:maze_ball/components/maze/cell_coordinates.dart';
 import 'package:maze_ball/components/maze/heart.dart';
+import 'package:maze_ball/pages/game.dart';
 import 'package:maze_ball/pages/home.dart';
 
 import 'background.dart';
@@ -74,12 +75,34 @@ class MazeBallGame extends Forge2DGame with KeyboardEvents {
       ),
     );
 
+    playState = PlayState.welcome;
+
     return super.onLoad();
+  }
+
+  void startGame() {
+    print("game started");
   }
 
   void finishGame() {
     print("game finished");
     Get.to(HomePage());
+  }
+
+  late PlayState _playState;
+  PlayState get playState => _playState;
+  set playState(PlayState playState) {
+    _playState = playState;
+    switch (playState) {
+      case PlayState.welcome:
+      case PlayState.gameOver:
+      case PlayState.won:
+        overlays.add(playState.name);
+      case PlayState.playing:
+        overlays.remove(PlayState.welcome.name);
+        overlays.remove(PlayState.gameOver.name);
+        overlays.remove(PlayState.won.name);
+    }
   }
 
   @override
