@@ -23,7 +23,7 @@ class MazeBallGame extends Forge2DGame with KeyboardEvents {
       );
 
   final _maze = Maze();
-  final _ball = Ball(position: Vector2.zero(), size: 10, color: Colors.brown);
+  Ball? _ball;
 
   CellCoordinatesConverter get cellCoordinatesConverter {
     final gameRect = camera.visibleWorldRect;
@@ -47,13 +47,29 @@ class MazeBallGame extends Forge2DGame with KeyboardEvents {
     final backgroundImage = await images.load('background/colored_grass.png');
     await world.add(Background(sprite: Sprite(backgroundImage)));
 
-    await world.add(_ball);
-
     await world.add(_maze);
 
     Random theRandom = Random();
     await world.add(
-      Heart(position: cellCoordinatesConverter.convert(CellCoordinates(theRandom.nextInt(horizontalItemsLength), theRandom.nextInt(verticalItemsLength)))),
+      _ball = Ball(
+        position: cellCoordinatesConverter.convert(
+          CellCoordinates(
+            theRandom.nextInt(horizontalItemsLength),
+            theRandom.nextInt(verticalItemsLength),
+          ),
+        ),
+      ),
+    );
+
+    await world.add(
+      Heart(
+        position: cellCoordinatesConverter.convert(
+          CellCoordinates(
+            theRandom.nextInt(horizontalItemsLength),
+            theRandom.nextInt(verticalItemsLength),
+          ),
+        ),
+      ),
     );
 
     return super.onLoad();
@@ -70,11 +86,11 @@ class MazeBallGame extends Forge2DGame with KeyboardEvents {
 
     if (isKeyDown) {
       if (keysPressed.contains(LogicalKeyboardKey.arrowRight)) {
-        _ball.body.gravityOverride?.rotate(pi / 2);
-        _ball.body.linearVelocity.setZero();
+        _ball!.body.gravityOverride?.rotate(pi / 2);
+        _ball!.body.linearVelocity.setZero();
       } else if (keysPressed.contains(LogicalKeyboardKey.arrowLeft)) {
-        _ball.body.gravityOverride?.rotate(-pi / 2);
-        _ball.body.linearVelocity.setZero();
+        _ball!.body.gravityOverride?.rotate(-pi / 2);
+        _ball!.body.linearVelocity.setZero();
       }
 
       return KeyEventResult.handled;
