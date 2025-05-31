@@ -8,12 +8,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/src/services/keyboard_key.g.dart';
 import 'package:maze_ball/components/maze.dart';
-import 'package:maze_ball/components/maze/cell_coordinates.dart';
-import 'package:maze_ball/components/maze/heart.dart';
+import 'package:maze_ball/components/collectibles/cell_coordinates.dart';
+import 'package:maze_ball/components/collectibles/heart.dart';
 import 'package:maze_ball/pages/game.dart';
 
 import 'background.dart';
-import 'ball.dart';
+import 'collectibles/ball.dart';
 
 class MazeBallGame extends Forge2DGame with KeyboardEvents {
   MazeBallGame()

@@ -4,8 +4,8 @@ import 'package:flame/components.dart';
 import 'package:flame_forge2d/flame_forge2d.dart';
 import 'package:maze_ball/components/game.dart';
 
-import 'maze/tile_coordinates.dart';
-import 'maze/tile_factory.dart';
+import 'tile/tile_coordinates.dart';
+import 'tile/tile_factory.dart';
 
 int horizontalItemsLength = 4;
 int verticalItemsLength = 4;

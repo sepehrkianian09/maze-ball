@@ -3,7 +3,7 @@ import 'package:flame/game.dart';
 import 'package:flame_forge2d/body_component.dart';
 import 'package:flame_forge2d/flame_forge2d.dart';
 import 'package:flutter/material.dart';
-import 'package:maze_ball/components/body_component_with_user_data.dart';
+import 'package:maze_ball/components/utils/body_component_with_user_data.dart';
 
 final double ballRadius = 2.5;
 
