@@ -100,7 +100,7 @@ class MazeBallGame extends Forge2DGame with KeyboardEvents {
     );
     await world.add(
       _scoreHelper = TextHelper(
-        position: Vector2(12.5, 22.5),
+        position: Vector2(12.5, 22),
         textShower: () => "Score: ${getScore()}",
         color: Colors.blueGrey,
       ),
