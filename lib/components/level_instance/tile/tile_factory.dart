@@ -1,6 +1,6 @@
 import 'package:flame/components.dart';
 import 'package:flutter/material.dart';
-import 'package:maze_ball/components/tile/maze_dimensions.dart';
+import 'package:maze_ball/components/level_instance/tile/maze_dimensions.dart';
 
 import 'tile.dart';
 import 'tile_coordinates.dart';

@@ -1,7 +1,7 @@
 import 'package:flame/components.dart';
 import 'package:flutter/material.dart';
 
-import '../utils/outlined_rectangle.dart';
+import '../../utils/outlined_rectangle.dart';
 
 class TextHelper extends PositionComponent {
   final String Function() textShower;

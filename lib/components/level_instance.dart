@@ -4,13 +4,13 @@ import 'dart:math';
 import 'package:flame/components.dart';
 import 'package:flutter/services.dart';
 import 'package:maze_ball/components/game.dart';
-import 'package:maze_ball/components/helpers.dart';
-import 'package:maze_ball/components/maze.dart';
+import 'package:maze_ball/components/level_instance/helpers.dart';
+import 'package:maze_ball/components/level_instance/maze.dart';
 
-import 'collectibles/ball.dart';
-import 'collectibles/cell_coordinates.dart';
-import 'collectibles/heart.dart';
-import 'tile/maze_dimensions.dart';
+import 'level_instance/collectibles/ball.dart';
+import 'level_instance/collectibles/cell_coordinates.dart';
+import 'level_instance/collectibles/heart.dart';
+import 'level_instance/tile/maze_dimensions.dart';
 
 class LevelInstance extends PositionComponent
     with HasGameReference<MazeBallGame> {
