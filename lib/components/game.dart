@@ -7,6 +7,7 @@ import 'package:flame_forge2d/flame_forge2d.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/src/services/keyboard_key.g.dart';
+import 'package:maze_ball/components/helpers.dart';
 import 'package:maze_ball/components/helpers/vector.dart';
 import 'package:maze_ball/components/maze.dart';
 import 'package:maze_ball/components/collectibles/cell_coordinates.dart';
@@ -47,11 +48,10 @@ class MazeBallGame extends Forge2DGame with KeyboardEvents {
   Maze? _maze;
 
   Ball? _ball;
+  get ball => _ball;
   Heart? _heart;
-  TextHelper? _scoreHelper;
 
-  VectorHelper? _gravityHelper;
-  VectorHelper? _velocityHelper;
+  MazeBallHelpers? _helpers;
 
   void _startGame() async {
     await world.add(_maze = Maze(level: _level));
@@ -68,24 +68,6 @@ class MazeBallGame extends Forge2DGame with KeyboardEvents {
         level: _level,
       ),
     );
-    await world.add(
-      _gravityHelper = VectorHelper(
-        position: Vector2(32.5, 22.5),
-        theVector: _ball!.body.gravityOverride!,
-        color: Colors.blueGrey,
-        vectorName: "Gravity",
-        textColor: Colors.black,
-      ),
-    );
-    await world.add(
-      _velocityHelper = VectorHelper(
-        position: Vector2(22.5, 22.5),
-        theVector: _ball!.body.linearVelocity,
-        color: Colors.blueGrey,
-        vectorName: "Velocity",
-        textColor: Colors.black,
-      ),
-    );
 
     // TODO what if heart and ball have the same coordinates?
     await world.add(
@@ -98,29 +80,21 @@ class MazeBallGame extends Forge2DGame with KeyboardEvents {
         ),
       ),
     );
-    await world.add(
-      _scoreHelper = TextHelper(
-        position: Vector2(12.5, 22),
-        textShower: () => "Score: ${getScore()}",
-        color: Colors.blueGrey,
-      ),
-    );
+
+    await world.add(_helpers = MazeBallHelpers(this));
     print("game started");
   }
 
   void _finishGame() {
+    world.remove(_helpers!);
+    _helpers = null;
+
     world.remove(_maze!);
     _maze = null;
 
-    world.remove(_velocityHelper!);
-    _velocityHelper = null;
-    world.remove(_gravityHelper!);
-    _gravityHelper = null;
     world.remove(_ball!);
     _ball = null;
 
-    world.remove(_scoreHelper!);
-    _scoreHelper = null;
     world.remove(_heart!);
     _heart = null;
 
