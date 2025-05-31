@@ -1,4 +1,5 @@
 import 'package:flame/components.dart';
+import 'package:flame/src/game/notifying_vector2.dart';
 import 'package:flutter/material.dart';
 
 class OutlinedRectangleComponent extends PositionComponent {
@@ -14,6 +15,16 @@ class OutlinedRectangleComponent extends PositionComponent {
   }) {
     this.position = position;
     this.size = size;
+  }
+
+  @override
+  set size(Vector2 size) {
+    final vertices = sizeToVertices(super.size, anchor);
+    position += vertices[0];
+
+    super.size = size;
+    final vertices2 = sizeToVertices(size, anchor);
+    position -= vertices2[0];
   }
 
   @override

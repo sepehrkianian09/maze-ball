@@ -15,7 +15,7 @@ class TextHelper extends PositionComponent {
   }) {
     add(
       _theComponent = TextComponent(
-        position: Vector2(0, 2.0),
+        position: Vector2.zero(),
         anchor: Anchor.center,
         textRenderer: TextPaint(
           style: TextStyle(
@@ -24,6 +24,15 @@ class TextHelper extends PositionComponent {
             fontWeight: FontWeight.bold,
           ),
         ),
+      ),
+    );
+
+    add(
+      OutlinedRectangleComponent(
+        position: Vector2.zero(),
+        anchor: Anchor.center,
+        size: Vector2(10.0, 4.0),
+        strokeWidth: 0.3,
       ),
     );
   }
