@@ -3,11 +3,21 @@ import 'dart:math';
 import 'package:flame/components.dart';
 
 import 'package:flutter/material.dart';
+import 'package:get/instance_manager.dart';
 import 'package:maze_ball/components/utils/outlined_rectangle.dart';
+
+extension on double {
+  double roundToDecimals(int places) {
+    num mod = pow(10.0, places);
+    return (this * mod).round() / mod;
+  }
+}
 
 class VectorHelper extends PositionComponent {
   final Vector2 theVector;
   final Color color;
+
+  late TextComponent _magnitudeHelper;
 
   VectorHelper({
     required super.position,
@@ -17,8 +27,22 @@ class VectorHelper extends PositionComponent {
     required Color textColor,
   }) : super(scale: Vector2.all(0.75)) {
     add(
+      _magnitudeHelper = TextComponent(
+        position: Vector2(0, _scale + 1.0),
+        anchor: Anchor.center,
+        textRenderer: TextPaint(
+          style: TextStyle(
+            fontSize: 2,
+            color: color,
+            fontWeight: FontWeight.bold,
+          ),
+        ),
+      ),
+    );
+
+    add(
       TextComponent(
-        position: Vector2(0, _scale + 2.0),
+        position: Vector2(0, _scale + 3.0),
         text: vectorName,
         anchor: Anchor.center,
         textRenderer: TextPaint(
@@ -35,7 +59,10 @@ class VectorHelper extends PositionComponent {
     add(
       OutlinedRectangleComponent(
         position: Vector2(-_scale, -2.0 - edge) - Vector2.all(edge),
-        size: Vector2(1, 1) * 2 * _scale + Vector2(1, 1) * 2 * edge + Vector2(0, edge * 3),
+        size:
+            Vector2(1, 1) * 2 * _scale +
+            Vector2(1, 1) * 2 * edge +
+            Vector2(0, edge * 3 + 0.5),
         strokeWidth: _scale * 0.1,
       ),
     );
@@ -55,12 +82,13 @@ class VectorHelper extends PositionComponent {
 
   @override
   void render(Canvas canvas) {
+    _magnitudeHelper.text = theVector.length.round().toString();
     super.render(canvas);
 
     final paint =
         Paint()
           ..color = color
-          ..strokeWidth = 0.3 * _scale
+          ..strokeWidth = 0.15 * _scale
           ..style = PaintingStyle.stroke;
 
     // Draw main line
