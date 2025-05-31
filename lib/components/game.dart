@@ -25,15 +25,12 @@ class MazeBallGame extends Forge2DGame with KeyboardEvents {
     _playState = PlayState.welcome;
   }
 
-  CellCoordinatesConverter get cellCoordinatesConverter {
+  MazeDimensions get mazeDimensions {
+    return MazeDimensions(game: this, horizontalLength: 4, verticalLength: 4);
+  }
 
-    return CellCoordinatesConverter(
-      mazeDimensions: MazeDimensions(
-        game: this,
-        horizontalLength: 4,
-        verticalLength: 4,
-      ),
-    );
+  CellCoordinatesConverter get cellCoordinatesConverter {
+    return CellCoordinatesConverter(mazeDimensions: mazeDimensions);
   }
 
   @override
