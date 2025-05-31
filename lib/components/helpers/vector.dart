@@ -1,17 +1,7 @@
 import 'dart:math';
-
 import 'package:flame/components.dart';
-
 import 'package:flutter/material.dart';
-import 'package:get/instance_manager.dart';
 import 'package:maze_ball/components/utils/outlined_rectangle.dart';
-
-extension on double {
-  double roundToDecimals(int places) {
-    num mod = pow(10.0, places);
-    return (this * mod).round() / mod;
-  }
-}
 
 class VectorHelper extends PositionComponent {
   final Vector2 theVector;

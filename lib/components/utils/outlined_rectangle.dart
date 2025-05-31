@@ -1,5 +1,4 @@
 import 'package:flame/components.dart';
-import 'package:flame/src/game/notifying_vector2.dart';
 import 'package:flutter/material.dart';
 
 class OutlinedRectangleComponent extends PositionComponent {
@@ -17,6 +16,7 @@ class OutlinedRectangleComponent extends PositionComponent {
     this.size = size;
   }
 
+  // TODO what about changing anchors?
   @override
   set size(Vector2 size) {
     final vertices = sizeToVertices(super.size, anchor);
