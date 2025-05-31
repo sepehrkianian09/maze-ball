@@ -9,7 +9,6 @@ import 'package:maze_ball/components/level_instance.dart';
 import 'package:maze_ball/pages/game.dart';
 
 import 'background.dart';
-import 'tile/maze_dimensions.dart';
 
 class MazeBallGame extends Forge2DGame with KeyboardEvents {
   MazeBallGame()
@@ -33,7 +32,7 @@ class MazeBallGame extends Forge2DGame with KeyboardEvents {
 
   void _startGame() async {
     await world.add(
-      _gameWorld = LevelInstance(gameInstance: this, level: _level),
+      _gameWorld = LevelInstance(level: _level),
     );
     print("game started");
   }
@@ -94,7 +93,6 @@ class MazeBallGame extends Forge2DGame with KeyboardEvents {
 
     if (isKeyDown) {
       _gameWorld?.handleKeys(keysPressed);
-
       return KeyEventResult.handled;
     }
 

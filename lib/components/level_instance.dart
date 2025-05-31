@@ -12,22 +12,11 @@ import 'collectibles/cell_coordinates.dart';
 import 'collectibles/heart.dart';
 import 'tile/maze_dimensions.dart';
 
-class LevelInstance extends PositionComponent {
-  final MazeBallGame gameInstance;
-
+class LevelInstance extends PositionComponent
+    with HasGameReference<MazeBallGame> {
   final int level;
 
-  LevelInstance({required this.gameInstance, required this.level}) {
-    mazeDimensions = MazeDimensions(
-      game: gameInstance,
-      horizontalLength: 4,
-      verticalLength: 4,
-    );
-
-    cellCoordinatesConverter = CellCoordinatesConverter(
-      mazeDimensions: mazeDimensions,
-    );
-  }
+  LevelInstance({required this.level});
 
   late final MazeDimensions mazeDimensions;
   late final CellCoordinatesConverter cellCoordinatesConverter;
@@ -37,6 +26,16 @@ class LevelInstance extends PositionComponent {
 
   @override
   FutureOr<void> onLoad() async {
+    mazeDimensions = MazeDimensions(
+      game: game,
+      horizontalLength: 4,
+      verticalLength: 4,
+    );
+
+    cellCoordinatesConverter = CellCoordinatesConverter(
+      mazeDimensions: mazeDimensions,
+    );
+
     await add(Maze(level: level, mazeDimensions: mazeDimensions));
 
     Random theRandom = Random();
@@ -64,7 +63,9 @@ class LevelInstance extends PositionComponent {
       ),
     );
 
-    await add(MazeBallHelpers(this));
+    await add(MazeBallHelpers(levelInstance: this));
+
+    return super.onLoad();
   }
 
   void handleKeys(Set<LogicalKeyboardKey> keysPressed) {
