@@ -13,20 +13,11 @@ int verticalItemsLength = 4;
 
 class Maze extends BodyComponent<MazeBallGame> with KeyboardHandler {
   MazeTileFactory get _mazeTileFactory {
-    final gameRect = game.camera.visibleWorldRect;
-    final gameWidth = gameRect.right - gameRect.left;
-    final gameWidthStart = gameRect.left;
-    final gameHeight = gameRect.bottom - gameRect.top;
-    final gameHeightStart = gameRect.top;
-
     return MazeTileFactory(
       mazeDimensions: MazeDimensions(
-        gameWidth: gameWidth,
-        gameHeight: gameHeight,
+        game: game,
         horizontalLength: 4,
         verticalLength: 4,
-        gameWidthStart: gameWidthStart,
-        gameHeightStart: gameHeightStart,
       ),
     );
   }

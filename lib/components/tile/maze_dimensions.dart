@@ -1,23 +1,28 @@
 import 'package:flame/components.dart';
+import 'package:flame_forge2d/flame_forge2d.dart';
 
 class MazeDimensions {
-  final double gameWidth;
-  final double gameHeight;
-
   final int horizontalLength;
   final int verticalLength;
 
-  final double gameWidthStart;
-  final double gameHeightStart;
+
+  late double gameWidth;
+  late double gameWidthStart;
+
+  late double gameHeight;
+  late double gameHeightStart;
 
   MazeDimensions({
-    required this.gameWidth,
-    required this.gameHeight,
+    required Forge2DGame game,
     required this.horizontalLength,
     required this.verticalLength,
-    required this.gameWidthStart,
-    required this.gameHeightStart,
-  });
+  }) {
+    final gameRect = game.camera.visibleWorldRect;
+    gameWidth = gameRect.right - gameRect.left;
+    gameWidthStart = gameRect.left;
+    gameHeight = gameRect.bottom - gameRect.top;
+    gameHeightStart = gameRect.top;
+  }
 
   final tileSize = Vector2(12, 2);
 

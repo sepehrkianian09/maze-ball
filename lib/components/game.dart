@@ -26,20 +26,12 @@ class MazeBallGame extends Forge2DGame with KeyboardEvents {
   }
 
   CellCoordinatesConverter get cellCoordinatesConverter {
-    final gameRect = camera.visibleWorldRect;
-    final gameWidth = gameRect.right - gameRect.left;
-    final gameWidthStart = gameRect.left;
-    final gameHeight = gameRect.bottom - gameRect.top;
-    final gameHeightStart = gameRect.top;
 
     return CellCoordinatesConverter(
       mazeDimensions: MazeDimensions(
-        gameWidth: gameWidth,
-        gameHeight: gameHeight,
+        game: this,
         horizontalLength: 4,
         verticalLength: 4,
-        gameWidthStart: gameWidthStart,
-        gameHeightStart: gameHeightStart,
       ),
     );
   }
