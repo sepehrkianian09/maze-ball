@@ -48,6 +48,7 @@ class MazeBallGame extends Forge2DGame with KeyboardEvents {
   Heart? _heart;
 
   VectorHelper? _gravityHelper;
+  VectorHelper? _velocityHelper;
 
   void _startGame() async {
     await world.add(_maze = Maze(level: _level));
@@ -66,13 +67,20 @@ class MazeBallGame extends Forge2DGame with KeyboardEvents {
     );
     await world.add(
       _gravityHelper = VectorHelper(
-        position: Vector2(
-          32.5, 20,
-        ),
+        position: Vector2(32.5, 22.5),
         theVector: _ball!.body.gravityOverride!,
         color: Colors.blueGrey,
         vectorName: "Gravity",
-        textColor: Colors.black54,
+        textColor: Colors.black,
+      ),
+    );
+    await world.add(
+      _velocityHelper = VectorHelper(
+        position: Vector2(22.5, 22.5),
+        theVector: _ball!.body.linearVelocity,
+        color: Colors.blueGrey,
+        vectorName: "Velocity",
+        textColor: Colors.black,
       ),
     );
 
@@ -94,6 +102,8 @@ class MazeBallGame extends Forge2DGame with KeyboardEvents {
     world.remove(_maze!);
     _maze = null;
 
+    world.remove(_velocityHelper!);
+    _velocityHelper = null;
     world.remove(_gravityHelper!);
     _gravityHelper = null;
     world.remove(_ball!);

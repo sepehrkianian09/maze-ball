@@ -3,6 +3,7 @@ import 'dart:math';
 import 'package:flame/components.dart';
 
 import 'package:flutter/material.dart';
+import 'package:maze_ball/components/utils/outlined_rectangle.dart';
 
 class VectorHelper extends PositionComponent {
   final Vector2 theVector;
@@ -13,16 +14,16 @@ class VectorHelper extends PositionComponent {
     required this.theVector,
     required this.color,
     required String vectorName,
-    required Color textColor
-  }) {
+    required Color textColor,
+  }) : super(scale: Vector2.all(0.75)) {
     add(
       TextComponent(
-        position: Vector2(0, 7.0),
+        position: Vector2(0, _scale + 2.0),
         text: vectorName,
         anchor: Anchor.center,
         textRenderer: TextPaint(
           style: TextStyle(
-            fontSize: 4.0,
+            fontSize: 2,
             color: textColor,
             fontWeight: FontWeight.bold,
           ),
@@ -30,10 +31,19 @@ class VectorHelper extends PositionComponent {
       ),
     );
 
+    double edge = 1.0;
+    add(
+      OutlinedRectangleComponent(
+        position: Vector2(-_scale, -2.0 - edge) - Vector2.all(edge),
+        size: Vector2(1, 1) * 2 * _scale + Vector2(1, 1) * 2 * edge + Vector2(0, edge * 3),
+        strokeWidth: _scale * 0.1,
+      ),
+    );
+
     print("position: $position");
   }
 
-  final double _scale = 5.0;
+  final double _scale = 3.0;
 
   Vector2 get start {
     return Vector2.zero();
@@ -50,7 +60,7 @@ class VectorHelper extends PositionComponent {
     final paint =
         Paint()
           ..color = color
-          ..strokeWidth = 1.5
+          ..strokeWidth = 0.3 * _scale
           ..style = PaintingStyle.stroke;
 
     // Draw main line
