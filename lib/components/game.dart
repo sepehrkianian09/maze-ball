@@ -66,11 +66,13 @@ class MazeBallGame extends Forge2DGame with KeyboardEvents {
     );
     await world.add(
       _gravityHelper = VectorHelper(
-        thePosition: Vector2(
-          32.5, 22.5,
+        position: Vector2(
+          32.5, 20,
         ),
         theVector: _ball!.body.gravityOverride!,
         color: Colors.blueGrey,
+        vectorName: "Gravity",
+        textColor: Colors.black54,
       ),
     );
 

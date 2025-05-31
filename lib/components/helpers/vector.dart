@@ -1,27 +1,46 @@
 import 'dart:math';
-import 'dart:ui';
 
 import 'package:flame/components.dart';
 
+import 'package:flutter/material.dart';
+
 class VectorHelper extends PositionComponent {
-  final Vector2 thePosition;
   final Vector2 theVector;
   final Color color;
 
   VectorHelper({
-    required this.thePosition,
+    required super.position,
     required this.theVector,
     required this.color,
-  });
+    required String vectorName,
+    required Color textColor
+  }) {
+    add(
+      TextComponent(
+        position: Vector2(0, 7.0),
+        text: vectorName,
+        anchor: Anchor.center,
+        textRenderer: TextPaint(
+          style: TextStyle(
+            fontSize: 4.0,
+            color: textColor,
+            fontWeight: FontWeight.bold,
+          ),
+        ),
+      ),
+    );
+
+    print("position: $position");
+  }
 
   final double _scale = 5.0;
 
   Vector2 get start {
-    return thePosition;
+    return Vector2.zero();
   }
 
   Vector2 get end {
-    return thePosition + theVector.normalized() * _scale;
+    return theVector.normalized() * _scale;
   }
 
   @override
