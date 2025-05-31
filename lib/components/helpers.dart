@@ -1,12 +1,12 @@
 import 'package:flame/components.dart';
 import 'package:flutter/material.dart';
-import 'package:maze_ball/components/game.dart';
+import 'package:maze_ball/components/game_world.dart';
 
 import 'helpers/text.dart';
 import 'helpers/vector.dart';
 
 class MazeBallHelpers extends PositionComponent {
-  MazeBallHelpers(MazeBallGame game) {
+  MazeBallHelpers(GameWorld game) {
     // gravity helper
     add(
       VectorHelper(
@@ -31,7 +31,7 @@ class MazeBallHelpers extends PositionComponent {
     add(
       TextHelper(
         position: Vector2(12.5, 22),
-        textShower: () => "Score: ${game.getScore()}",
+        textShower: () => "Score: ${game.gameInstance.getScore()}",
         color: Colors.blueGrey,
       ),
     );

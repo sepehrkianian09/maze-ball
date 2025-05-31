@@ -1,22 +1,14 @@
 import 'dart:async';
-import 'dart:math';
 
 import 'package:flame/components.dart';
 import 'package:flame/events.dart';
 import 'package:flame_forge2d/flame_forge2d.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter/src/services/keyboard_key.g.dart';
-import 'package:maze_ball/components/helpers.dart';
-import 'package:maze_ball/components/helpers/vector.dart';
-import 'package:maze_ball/components/maze.dart';
-import 'package:maze_ball/components/collectibles/cell_coordinates.dart';
-import 'package:maze_ball/components/collectibles/heart.dart';
+import 'package:maze_ball/components/game_world.dart';
 import 'package:maze_ball/pages/game.dart';
 
 import 'background.dart';
-import 'collectibles/ball.dart';
-import 'helpers/text.dart';
 import 'tile/maze_dimensions.dart';
 
 class MazeBallGame extends Forge2DGame with KeyboardEvents {
@@ -32,10 +24,6 @@ class MazeBallGame extends Forge2DGame with KeyboardEvents {
     return MazeDimensions(game: this, horizontalLength: 4, verticalLength: 4);
   }
 
-  CellCoordinatesConverter get cellCoordinatesConverter {
-    return CellCoordinatesConverter(mazeDimensions: mazeDimensions);
-  }
-
   @override
   FutureOr<void> onLoad() async {
     final backgroundImage = await images.load('background/colored_grass.png');
@@ -45,59 +33,16 @@ class MazeBallGame extends Forge2DGame with KeyboardEvents {
     return super.onLoad();
   }
 
-  Maze? _maze;
-
-  Ball? _ball;
-  get ball => _ball;
-  Heart? _heart;
-
-  MazeBallHelpers? _helpers;
+  GameWorld? _gameWorld;
 
   void _startGame() async {
-    await world.add(_maze = Maze(level: _level));
-
-    Random theRandom = Random();
-    await world.add(
-      _ball = Ball(
-        position: cellCoordinatesConverter.convert(
-          CellCoordinates(
-            theRandom.nextInt(mazeDimensions.horizontalLength),
-            theRandom.nextInt(mazeDimensions.verticalLength),
-          ),
-        ),
-        level: _level,
-      ),
-    );
-
-    // TODO what if heart and ball have the same coordinates?
-    await world.add(
-      _heart = Heart(
-        position: cellCoordinatesConverter.convert(
-          CellCoordinates(
-            theRandom.nextInt(mazeDimensions.horizontalLength),
-            theRandom.nextInt(mazeDimensions.verticalLength),
-          ),
-        ),
-      ),
-    );
-
-    await world.add(_helpers = MazeBallHelpers(this));
+    await world.add(_gameWorld = GameWorld(gameInstance: this, level: _level));
     print("game started");
   }
 
   void _finishGame() {
-    world.remove(_helpers!);
-    _helpers = null;
-
-    world.remove(_maze!);
-    _maze = null;
-
-    world.remove(_ball!);
-    _ball = null;
-
-    world.remove(_heart!);
-    _heart = null;
-
+    world.remove(_gameWorld!);
+    _gameWorld = null;
     print("game finished");
   }
 
@@ -150,13 +95,7 @@ class MazeBallGame extends Forge2DGame with KeyboardEvents {
     // print("event pressed $event");
 
     if (isKeyDown) {
-      if (keysPressed.contains(LogicalKeyboardKey.arrowRight)) {
-        _ball!.body.gravityOverride?.rotate(pi / 2);
-        _ball!.body.linearVelocity.setZero();
-      } else if (keysPressed.contains(LogicalKeyboardKey.arrowLeft)) {
-        _ball!.body.gravityOverride?.rotate(-pi / 2);
-        _ball!.body.linearVelocity.setZero();
-      }
+      _gameWorld?.handleKeys(keysPressed);
 
       return KeyEventResult.handled;
     }
