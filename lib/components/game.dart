@@ -5,7 +5,7 @@ import 'package:flame/events.dart';
 import 'package:flame_forge2d/flame_forge2d.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:maze_ball/components/game_world.dart';
+import 'package:maze_ball/components/level_instance.dart';
 import 'package:maze_ball/pages/game.dart';
 
 import 'background.dart';
@@ -20,10 +20,6 @@ class MazeBallGame extends Forge2DGame with KeyboardEvents {
     _playState = PlayState.welcome;
   }
 
-  MazeDimensions get mazeDimensions {
-    return MazeDimensions(game: this, horizontalLength: 4, verticalLength: 4);
-  }
-
   @override
   FutureOr<void> onLoad() async {
     final backgroundImage = await images.load('background/colored_grass.png');
@@ -33,10 +29,12 @@ class MazeBallGame extends Forge2DGame with KeyboardEvents {
     return super.onLoad();
   }
 
-  GameWorld? _gameWorld;
+  LevelInstance? _gameWorld;
 
   void _startGame() async {
-    await world.add(_gameWorld = GameWorld(gameInstance: this, level: _level));
+    await world.add(
+      _gameWorld = LevelInstance(gameInstance: this, level: _level),
+    );
     print("game started");
   }
 

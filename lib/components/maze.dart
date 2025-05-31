@@ -3,16 +3,20 @@ import 'dart:math';
 import 'package:flame/components.dart';
 import 'package:flame_forge2d/flame_forge2d.dart';
 import 'package:maze_ball/components/game.dart';
+import 'package:maze_ball/components/tile/maze_dimensions.dart';
 
 import 'tile/tile_coordinates.dart';
 import 'tile/tile_factory.dart';
 
 class Maze extends BodyComponent<MazeBallGame> with KeyboardHandler {
   MazeTileFactory get _mazeTileFactory {
-    return MazeTileFactory(mazeDimensions: game.mazeDimensions);
+    return MazeTileFactory(mazeDimensions: mazeDimensions);
   }
 
-  Maze({required this.level})
+  final MazeDimensions mazeDimensions;
+  final int level;
+
+  Maze({required this.level, required this.mazeDimensions})
     : super(
         bodyDef: BodyDef(
           type: BodyType.static,
@@ -22,7 +26,7 @@ class Maze extends BodyComponent<MazeBallGame> with KeyboardHandler {
 
   Future<void> _buildMazeBound() async {
     // add horizontal walls
-    for (var i = 0; i < game.mazeDimensions.horizontalLength; i++) {
+    for (var i = 0; i < mazeDimensions.horizontalLength; i++) {
       await add(
         _mazeTileFactory.createTile(
           MazeTileCoordinates(
@@ -36,7 +40,7 @@ class Maze extends BodyComponent<MazeBallGame> with KeyboardHandler {
         _mazeTileFactory.createTile(
           MazeTileCoordinates(
             horizontalIndex: i,
-            verticalIndex: game.mazeDimensions.verticalLength,
+            verticalIndex: mazeDimensions.verticalLength,
             angle: MazeTileAngle.zero,
           ),
         ),
@@ -44,7 +48,7 @@ class Maze extends BodyComponent<MazeBallGame> with KeyboardHandler {
     }
 
     // add vertical walls
-    for (var j = 0; j < game.mazeDimensions.verticalLength; j++) {
+    for (var j = 0; j < mazeDimensions.verticalLength; j++) {
       await add(
         _mazeTileFactory.createTile(
           MazeTileCoordinates(
@@ -57,7 +61,7 @@ class Maze extends BodyComponent<MazeBallGame> with KeyboardHandler {
       await add(
         _mazeTileFactory.createTile(
           MazeTileCoordinates(
-            horizontalIndex: game.mazeDimensions.horizontalLength,
+            horizontalIndex: mazeDimensions.horizontalLength,
             verticalIndex: j,
             angle: MazeTileAngle.perpendicular,
           ),
@@ -76,8 +80,8 @@ class Maze extends BodyComponent<MazeBallGame> with KeyboardHandler {
     while (i < numberOfTiles) {
       final tileCoordinates = MazeTileCoordinates.randomInternal(
         theRandom,
-        game.mazeDimensions.horizontalLength,
-        game.mazeDimensions.verticalLength,
+        mazeDimensions.horizontalLength,
+        mazeDimensions.verticalLength,
       );
       // print("tile coordinates: $tileCoordinates");
       if (addedTileCoordinates.contains(tileCoordinates)) {
@@ -90,7 +94,6 @@ class Maze extends BodyComponent<MazeBallGame> with KeyboardHandler {
     return addedTileCoordinates;
   }
 
-  final int level;
 
   Future<void> _buildRandomTiles(Random theRandom) async {
     int numberOfTiles = level + theRandom.nextInt(level);

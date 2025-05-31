@@ -1,12 +1,12 @@
 import 'package:flame/components.dart';
 import 'package:flutter/material.dart';
-import 'package:maze_ball/components/game_world.dart';
+import 'package:maze_ball/components/level_instance.dart';
 
 import 'helpers/text.dart';
 import 'helpers/vector.dart';
 
 class MazeBallHelpers extends PositionComponent {
-  MazeBallHelpers(GameWorld game) {
+  MazeBallHelpers(LevelInstance game) {
     // gravity helper
     add(
       VectorHelper(
