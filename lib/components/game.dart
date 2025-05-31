@@ -47,27 +47,28 @@ class MazeBallGame extends Forge2DGame with KeyboardEvents {
   Heart? _heart;
 
   void _startGame() async {
-    await world.add(_maze = Maze());
+    await world.add(_maze = Maze(level: _level));
 
     Random theRandom = Random();
     await world.add(
       _ball = Ball(
         position: cellCoordinatesConverter.convert(
           CellCoordinates(
-            theRandom.nextInt(horizontalItemsLength),
-            theRandom.nextInt(verticalItemsLength),
+            theRandom.nextInt(mazeDimensions.horizontalLength),
+            theRandom.nextInt(mazeDimensions.verticalLength),
           ),
         ),
         level: _level,
       ),
     );
 
+    // TODO what if heart and ball have the same coordinates?
     await world.add(
       _heart = Heart(
         position: cellCoordinatesConverter.convert(
           CellCoordinates(
-            theRandom.nextInt(horizontalItemsLength),
-            theRandom.nextInt(verticalItemsLength),
+            theRandom.nextInt(mazeDimensions.horizontalLength),
+            theRandom.nextInt(mazeDimensions.verticalLength),
           ),
         ),
       ),

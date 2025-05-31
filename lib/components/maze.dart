@@ -7,15 +7,12 @@ import 'package:maze_ball/components/game.dart';
 import 'tile/tile_coordinates.dart';
 import 'tile/tile_factory.dart';
 
-int horizontalItemsLength = 4;
-int verticalItemsLength = 4;
-
 class Maze extends BodyComponent<MazeBallGame> with KeyboardHandler {
   MazeTileFactory get _mazeTileFactory {
     return MazeTileFactory(mazeDimensions: game.mazeDimensions);
   }
 
-  Maze()
+  Maze({required this.level})
     : super(
         bodyDef: BodyDef(
           type: BodyType.static,
@@ -25,7 +22,7 @@ class Maze extends BodyComponent<MazeBallGame> with KeyboardHandler {
 
   Future<void> _buildMazeBound() async {
     // add horizontal walls
-    for (var i = 0; i < horizontalItemsLength; i++) {
+    for (var i = 0; i < game.mazeDimensions.horizontalLength; i++) {
       await add(
         _mazeTileFactory.createTile(
           MazeTileCoordinates(
@@ -39,7 +36,7 @@ class Maze extends BodyComponent<MazeBallGame> with KeyboardHandler {
         _mazeTileFactory.createTile(
           MazeTileCoordinates(
             horizontalIndex: i,
-            verticalIndex: verticalItemsLength,
+            verticalIndex: game.mazeDimensions.verticalLength,
             angle: MazeTileAngle.zero,
           ),
         ),
@@ -47,7 +44,7 @@ class Maze extends BodyComponent<MazeBallGame> with KeyboardHandler {
     }
 
     // add vertical walls
-    for (var j = 0; j < verticalItemsLength; j++) {
+    for (var j = 0; j < game.mazeDimensions.verticalLength; j++) {
       await add(
         _mazeTileFactory.createTile(
           MazeTileCoordinates(
@@ -60,7 +57,7 @@ class Maze extends BodyComponent<MazeBallGame> with KeyboardHandler {
       await add(
         _mazeTileFactory.createTile(
           MazeTileCoordinates(
-            horizontalIndex: horizontalItemsLength,
+            horizontalIndex: game.mazeDimensions.horizontalLength,
             verticalIndex: j,
             angle: MazeTileAngle.perpendicular,
           ),
@@ -69,6 +66,7 @@ class Maze extends BodyComponent<MazeBallGame> with KeyboardHandler {
     }
   }
 
+  // TODO what if there is a round in the graph of bound coordinates?
   List<MazeTileCoordinates> _getRandomUniqueCoordinates(
     int numberOfTiles,
     Random theRandom,
@@ -78,8 +76,8 @@ class Maze extends BodyComponent<MazeBallGame> with KeyboardHandler {
     while (i < numberOfTiles) {
       final tileCoordinates = MazeTileCoordinates.randomInternal(
         theRandom,
-        horizontalItemsLength,
-        verticalItemsLength,
+        game.mazeDimensions.horizontalLength,
+        game.mazeDimensions.verticalLength,
       );
       // print("tile coordinates: $tileCoordinates");
       if (addedTileCoordinates.contains(tileCoordinates)) {
@@ -92,10 +90,14 @@ class Maze extends BodyComponent<MazeBallGame> with KeyboardHandler {
     return addedTileCoordinates;
   }
 
+  final int level;
+
   Future<void> _buildRandomTiles(Random theRandom) async {
     final maximumNumberOfTiles =
-        (horizontalItemsLength - 1) * (verticalItemsLength) +
-        (horizontalItemsLength) * (verticalItemsLength - 1);
+        (game.mazeDimensions.horizontalLength - 1) *
+            (game.mazeDimensions.verticalLength) +
+        (game.mazeDimensions.horizontalLength) *
+            (game.mazeDimensions.verticalLength - 1);
     int numberOfTiles = theRandom.nextInt(maximumNumberOfTiles / 2 as int);
     print("number of random tiles: $numberOfTiles");
 
