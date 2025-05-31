@@ -15,6 +15,7 @@ import 'package:maze_ball/pages/game.dart';
 
 import 'background.dart';
 import 'collectibles/ball.dart';
+import 'helpers/text.dart';
 import 'tile/maze_dimensions.dart';
 
 class MazeBallGame extends Forge2DGame with KeyboardEvents {
@@ -44,8 +45,10 @@ class MazeBallGame extends Forge2DGame with KeyboardEvents {
   }
 
   Maze? _maze;
+
   Ball? _ball;
   Heart? _heart;
+  TextHelper? _scoreHelper;
 
   VectorHelper? _gravityHelper;
   VectorHelper? _velocityHelper;
@@ -95,6 +98,13 @@ class MazeBallGame extends Forge2DGame with KeyboardEvents {
         ),
       ),
     );
+    await world.add(
+      _scoreHelper = TextHelper(
+        position: Vector2(12.5, 22.5),
+        textShower: () => "Score: ${getScore()}",
+        color: Colors.blueGrey,
+      ),
+    );
     print("game started");
   }
 
@@ -109,6 +119,8 @@ class MazeBallGame extends Forge2DGame with KeyboardEvents {
     world.remove(_ball!);
     _ball = null;
 
+    world.remove(_scoreHelper!);
+    _scoreHelper = null;
     world.remove(_heart!);
     _heart = null;
 
