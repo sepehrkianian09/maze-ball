@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:maze_ball/components/ball.dart';
 import 'package:maze_ball/components/body_component_with_user_data.dart';
 import 'package:maze_ball/components/game.dart';
+import 'package:maze_ball/pages/game.dart';
 
 final double heartRadius = 2.0;
 
@@ -31,7 +32,7 @@ class Heart extends BodyComponentWithUserData<MazeBallGame>
   @override
   void beginContact(Object other, Contact contact) {
     if (other is Ball) {
-      game.finishGame();
+      game.playState = PlayState.result;
     }
     super.beginContact(other, contact);
   }

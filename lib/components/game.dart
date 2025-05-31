@@ -16,17 +16,15 @@ import 'package:maze_ball/pages/home.dart';
 
 import 'background.dart';
 import 'ball.dart';
-import 'maze/tile.dart';
 
 class MazeBallGame extends Forge2DGame with KeyboardEvents {
   MazeBallGame()
     : super(
         gravity: Vector2(0, 10),
         camera: CameraComponent.withFixedResolution(width: 800, height: 600),
-      );
-
-  final _maze = Maze();
-  Ball? _ball;
+      ) {
+    _playState = PlayState.welcome;
+  }
 
   CellCoordinatesConverter get cellCoordinatesConverter {
     final gameRect = camera.visibleWorldRect;
@@ -49,8 +47,17 @@ class MazeBallGame extends Forge2DGame with KeyboardEvents {
   FutureOr<void> onLoad() async {
     final backgroundImage = await images.load('background/colored_grass.png');
     await world.add(Background(sprite: Sprite(backgroundImage)));
+    playState = PlayState.welcome;
 
-    await world.add(_maze);
+    return super.onLoad();
+  }
+
+  Maze? _maze;
+  Ball? _ball;
+  Heart? _heart;
+
+  void _startGame() async {
+    await world.add(_maze = Maze());
 
     Random theRandom = Random();
     await world.add(
@@ -65,7 +72,7 @@ class MazeBallGame extends Forge2DGame with KeyboardEvents {
     );
 
     await world.add(
-      Heart(
+      _heart = Heart(
         position: cellCoordinatesConverter.convert(
           CellCoordinates(
             theRandom.nextInt(horizontalItemsLength),
@@ -74,17 +81,19 @@ class MazeBallGame extends Forge2DGame with KeyboardEvents {
         ),
       ),
     );
-
-    playState = PlayState.welcome;
-
-    return super.onLoad();
-  }
-
-  void startGame() {
     print("game started");
   }
 
-  void finishGame() {
+  void _finishGame() {
+    world.remove(_maze!);
+    _maze = null;
+
+    world.remove(_ball!);
+    _ball = null;
+
+    world.remove(_heart!);
+    _heart = null;
+
     print("game finished");
     Get.to(HomePage());
   }
@@ -92,16 +101,24 @@ class MazeBallGame extends Forge2DGame with KeyboardEvents {
   late PlayState _playState;
   PlayState get playState => _playState;
   set playState(PlayState playState) {
-    _playState = playState;
-    switch (playState) {
+    switch (_playState) {
       case PlayState.welcome:
-      case PlayState.gameOver:
-      case PlayState.won:
-        overlays.add(playState.name);
+      case PlayState.result:
+        overlays.remove(_playState.name);
+        break;
       case PlayState.playing:
-        overlays.remove(PlayState.welcome.name);
-        overlays.remove(PlayState.gameOver.name);
-        overlays.remove(PlayState.won.name);
+        _finishGame();
+        break;
+    }
+    _playState = playState;
+    switch (_playState) {
+      case PlayState.welcome:
+      case PlayState.result:
+        overlays.add(_playState.name);
+        break;
+      case PlayState.playing:
+        _startGame();
+        break;
     }
   }
 

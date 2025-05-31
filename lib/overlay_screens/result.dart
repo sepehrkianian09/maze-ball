@@ -4,10 +4,11 @@ import 'package:maze_ball/components/game.dart';
 import 'package:maze_ball/overlay_screens/utils.dart';
 import 'package:maze_ball/pages/game.dart';
 
-class WelcomeOverlayScreen extends StatelessWidget {
+class ResultOverlayScreen extends StatelessWidget {
   final MazeBallGame game;
+  final double score = 10.0;
 
-  const WelcomeOverlayScreen(this.game, {super.key});
+  const ResultOverlayScreen(this.game, {super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -18,11 +19,11 @@ class WelcomeOverlayScreen extends StatelessWidget {
           size: MediaQuery.of(context).size,
           painter: CircularPainter(),
         ),
-        Center(
-          child: ElevatedButton(
-            onPressed: startGame,
-            child: Text("Start Game"),
-          ),
+        Column(
+          children: [
+            Text("Score: $score"),
+            ElevatedButton(onPressed: startGame, child: Text("Start Game")),
+          ],
         ),
       ],
     );
