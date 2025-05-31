@@ -14,6 +14,7 @@ import 'package:maze_ball/pages/game.dart';
 
 import 'background.dart';
 import 'collectibles/ball.dart';
+import 'tile/maze_dimensions.dart';
 
 class MazeBallGame extends Forge2DGame with KeyboardEvents {
   MazeBallGame()
@@ -32,12 +33,14 @@ class MazeBallGame extends Forge2DGame with KeyboardEvents {
     final gameHeightStart = gameRect.top;
 
     return CellCoordinatesConverter(
-      gameWidth: gameWidth,
-      gameHeight: gameHeight,
-      horizontalLength: horizontalItemsLength,
-      verticalLength: verticalItemsLength,
-      gameWidthStart: gameWidthStart,
-      gameHeightStart: gameHeightStart,
+      mazeDimensions: MazeDimensions(
+        gameWidth: gameWidth,
+        gameHeight: gameHeight,
+        horizontalLength: 4,
+        verticalLength: 4,
+        gameWidthStart: gameWidthStart,
+        gameHeightStart: gameHeightStart,
+      ),
     );
   }
 

@@ -1,61 +1,34 @@
 import 'package:flame/components.dart';
 import 'package:flutter/material.dart';
+import 'package:maze_ball/components/tile/maze_dimensions.dart';
 
 import 'tile.dart';
 import 'tile_coordinates.dart';
 
 class MazeTileFactory {
-  final double _gameWidth;
-  final double _gameHeight;
+  final MazeDimensions mazeDimensions;
 
-  final int _horizontalLength;
-  final int _verticalLength;
-
-  final double _gameWidthStart;
-  final double _gameHeightStart;
-
-  MazeTileFactory({
-    required double gameWidth,
-    required double gameHeight,
-    required int horizontalLength,
-    required int verticalLength,
-    required double gameWidthStart,
-    required double gameHeightStart,
-  }) : _gameHeightStart = gameHeightStart,
-       _gameWidthStart = gameWidthStart,
-       _verticalLength = verticalLength,
-       _horizontalLength = horizontalLength,
-       _gameHeight = gameHeight,
-       _gameWidth = gameWidth;
-
-  final _tileSize = Vector2(12, 2);
-
-  Vector2 get tileSpace {
-    return Vector2(
-      _gameWidth / _horizontalLength - _tileSize.x,
-      _gameHeight / _verticalLength - _tileSize.x,
-    );
-  }
+  MazeTileFactory({required this.mazeDimensions});
 
   Vector2 _getPosition(MazeTileCoordinates coordinates) {
     switch (coordinates.angle) {
       case MazeTileAngle.zero:
         return Vector2(
-          _gameWidthStart +
-              coordinates.horizontalIndex * (_tileSize.x + tileSpace.x) +
-              _tileSize.x / 2.0 +
-              tileSpace.x / 2.0,
-          _gameHeightStart +
-              coordinates.verticalIndex * (_tileSize.x + tileSpace.y),
+          mazeDimensions.gameWidthStart +
+              coordinates.horizontalIndex * (mazeDimensions.tileSize.x +mazeDimensions.tileSpace.x) +
+              mazeDimensions.tileSize.x / 2.0 +
+            mazeDimensions.tileSpace.x / 2.0,
+          mazeDimensions.gameHeightStart +
+              coordinates.verticalIndex * (mazeDimensions.tileSize.x +mazeDimensions.tileSpace.y),
         );
       case MazeTileAngle.perpendicular:
         return Vector2(
-          _gameWidthStart +
-              coordinates.horizontalIndex * (_tileSize.x + tileSpace.x),
-          _gameHeightStart +
-              coordinates.verticalIndex * (_tileSize.x + tileSpace.y) +
-              _tileSize.x / 2.0 +
-              tileSpace.y / 2.0,
+          mazeDimensions.gameWidthStart +
+              coordinates.horizontalIndex * (mazeDimensions.tileSize.x +mazeDimensions.tileSpace.x),
+          mazeDimensions.gameHeightStart +
+              coordinates.verticalIndex * (mazeDimensions.tileSize.x +mazeDimensions.tileSpace.y) +
+              mazeDimensions.tileSize.x / 2.0 +
+              mazeDimensions.tileSpace.y / 2.0,
         );
     }
   }
@@ -63,7 +36,7 @@ class MazeTileFactory {
   MazeTile createTile(MazeTileCoordinates coordinates) {
     return MazeTile(
       position: _getPosition(coordinates),
-      size: _tileSize,
+      size: mazeDimensions.tileSize,
       color: Colors.amber,
       angle: coordinates.angle.value,
     );

@@ -4,6 +4,7 @@ import 'package:flame/components.dart';
 import 'package:flame_forge2d/flame_forge2d.dart';
 import 'package:maze_ball/components/game.dart';
 
+import 'tile/maze_dimensions.dart';
 import 'tile/tile_coordinates.dart';
 import 'tile/tile_factory.dart';
 
@@ -19,12 +20,14 @@ class Maze extends BodyComponent<MazeBallGame> with KeyboardHandler {
     final gameHeightStart = gameRect.top;
 
     return MazeTileFactory(
-      gameWidth: gameWidth,
-      gameHeight: gameHeight,
-      horizontalLength: 4,
-      verticalLength: 4,
-      gameWidthStart: gameWidthStart,
-      gameHeightStart: gameHeightStart,
+      mazeDimensions: MazeDimensions(
+        gameWidth: gameWidth,
+        gameHeight: gameHeight,
+        horizontalLength: 4,
+        verticalLength: 4,
+        gameWidthStart: gameWidthStart,
+        gameHeightStart: gameHeightStart,
+      ),
     );
   }
 
