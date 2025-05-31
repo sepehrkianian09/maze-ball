@@ -95,6 +95,11 @@ class MazeBallGame extends Forge2DGame with KeyboardEvents {
     print("game finished");
   }
 
+  void restartGame() {
+    _finishGame();
+    _startGame();
+  }
+
   late PlayState _playState;
   PlayState get playState => _playState;
   set playState(PlayState playState) {
