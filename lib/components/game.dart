@@ -66,6 +66,7 @@ class MazeBallGame extends Forge2DGame with KeyboardEvents {
             theRandom.nextInt(verticalItemsLength),
           ),
         ),
+        level: _level,
       ),
     );
 
@@ -95,9 +96,16 @@ class MazeBallGame extends Forge2DGame with KeyboardEvents {
     print("game finished");
   }
 
-  void restartGame() {
+  int _level = 1;
+
+  void goToNextLevel() {
     _finishGame();
+    _level += 1;
     _startGame();
+  }
+
+  int getScore() {
+    return _level - 1;
   }
 
   late PlayState _playState;
@@ -121,6 +129,7 @@ class MazeBallGame extends Forge2DGame with KeyboardEvents {
         overlays.add(_playState.name);
         break;
       case PlayState.playing:
+        _level = 1;
         _startGame();
         break;
     }

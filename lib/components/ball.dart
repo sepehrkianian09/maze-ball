@@ -8,12 +8,12 @@ import 'package:maze_ball/components/body_component_with_user_data.dart';
 final double ballRadius = 2.5;
 
 class Ball extends BodyComponentWithUserData {
-  Ball({required Vector2 position})
+  Ball({required Vector2 position, required int level})
     : super(
         bodyDef:
             BodyDef(
                 type: BodyType.dynamic,
-                gravityOverride: Vector2(0, 10.0),
+                gravityOverride: Vector2(0, 5 * level + 5),
                 isAwake: true,
                 allowSleep: false,
                 fixedRotation: true,

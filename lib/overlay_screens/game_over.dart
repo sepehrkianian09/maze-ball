@@ -24,6 +24,7 @@ class GameOverOverlayScreen extends StatelessWidget {
             mainAxisSize: MainAxisSize.min,
             children: [
               Text("Game Over"),
+              Text("Score: ${game.getScore()}"),
               ElevatedButton(onPressed: startGame, child: Text("Start Over")),
             ],
           ),
