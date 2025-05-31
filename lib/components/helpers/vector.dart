@@ -56,8 +56,6 @@ class VectorHelper extends PositionComponent {
         strokeWidth: _scale * 0.1,
       ),
     );
-
-    print("position: $position");
   }
 
   final double _scale = 3.0;
