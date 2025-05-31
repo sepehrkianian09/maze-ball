@@ -32,7 +32,7 @@ class Heart extends BodyComponentWithUserData<MazeBallGame>
   @override
   void beginContact(Object other, Contact contact) {
     if (other is Ball) {
-      game.playState = PlayState.result;
+      game.playState = PlayState.won;
     }
     super.beginContact(other, contact);
   }

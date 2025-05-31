@@ -100,7 +100,8 @@ class MazeBallGame extends Forge2DGame with KeyboardEvents {
   set playState(PlayState playState) {
     switch (_playState) {
       case PlayState.welcome:
-      case PlayState.result:
+      case PlayState.won:
+      case PlayState.gameOver:
         overlays.remove(_playState.name);
         break;
       case PlayState.playing:
@@ -109,8 +110,9 @@ class MazeBallGame extends Forge2DGame with KeyboardEvents {
     }
     _playState = playState;
     switch (_playState) {
+      case PlayState.won:
+      case PlayState.gameOver:
       case PlayState.welcome:
-      case PlayState.result:
         overlays.add(_playState.name);
         break;
       case PlayState.playing:
