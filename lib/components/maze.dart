@@ -93,12 +93,7 @@ class Maze extends BodyComponent<MazeBallGame> with KeyboardHandler {
   final int level;
 
   Future<void> _buildRandomTiles(Random theRandom) async {
-    final maximumNumberOfTiles =
-        (game.mazeDimensions.horizontalLength - 1) *
-            (game.mazeDimensions.verticalLength) +
-        (game.mazeDimensions.horizontalLength) *
-            (game.mazeDimensions.verticalLength - 1);
-    int numberOfTiles = theRandom.nextInt(maximumNumberOfTiles / 2 as int);
+    int numberOfTiles = level + theRandom.nextInt(level);
     print("number of random tiles: $numberOfTiles");
 
     for (var coordinate in _getRandomUniqueCoordinates(
