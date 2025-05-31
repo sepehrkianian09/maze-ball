@@ -19,11 +19,14 @@ class ResultOverlayScreen extends StatelessWidget {
           size: MediaQuery.of(context).size,
           painter: CircularPainter(),
         ),
-        Column(
-          children: [
-            Text("Score: $score"),
-            ElevatedButton(onPressed: startGame, child: Text("Start Game")),
-          ],
+        Center(
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Text("Score: $score"),
+              ElevatedButton(onPressed: startGame, child: Text("Start Game")),
+            ],
+          ),
         ),
       ],
     );

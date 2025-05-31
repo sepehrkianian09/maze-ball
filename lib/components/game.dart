@@ -7,12 +7,10 @@ import 'package:flame_forge2d/flame_forge2d.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/src/services/keyboard_key.g.dart';
-import 'package:get/get.dart';
 import 'package:maze_ball/components/maze.dart';
 import 'package:maze_ball/components/maze/cell_coordinates.dart';
 import 'package:maze_ball/components/maze/heart.dart';
 import 'package:maze_ball/pages/game.dart';
-import 'package:maze_ball/pages/home.dart';
 
 import 'background.dart';
 import 'ball.dart';
@@ -95,7 +93,6 @@ class MazeBallGame extends Forge2DGame with KeyboardEvents {
     _heart = null;
 
     print("game finished");
-    Get.to(HomePage());
   }
 
   late PlayState _playState;
