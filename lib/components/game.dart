@@ -7,6 +7,7 @@ import 'package:flame_forge2d/flame_forge2d.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/src/services/keyboard_key.g.dart';
+import 'package:maze_ball/components/helpers/vector.dart';
 import 'package:maze_ball/components/maze.dart';
 import 'package:maze_ball/components/collectibles/cell_coordinates.dart';
 import 'package:maze_ball/components/collectibles/heart.dart';
@@ -46,6 +47,8 @@ class MazeBallGame extends Forge2DGame with KeyboardEvents {
   Ball? _ball;
   Heart? _heart;
 
+  VectorHelper? _gravityHelper;
+
   void _startGame() async {
     await world.add(_maze = Maze(level: _level));
 
@@ -59,6 +62,13 @@ class MazeBallGame extends Forge2DGame with KeyboardEvents {
           ),
         ),
         level: _level,
+      ),
+    );
+    await world.add(
+      _gravityHelper = VectorHelper(
+        thePosition: Vector2.zero(),
+        theVector: _ball!.body.gravityOverride!,
+        color: Colors.blueGrey,
       ),
     );
 
@@ -80,6 +90,8 @@ class MazeBallGame extends Forge2DGame with KeyboardEvents {
     world.remove(_maze!);
     _maze = null;
 
+    world.remove(_gravityHelper!);
+    _gravityHelper = null;
     world.remove(_ball!);
     _ball = null;
 
