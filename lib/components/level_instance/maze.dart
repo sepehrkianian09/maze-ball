@@ -76,6 +76,14 @@ class Maze extends BodyComponent<MazeBallGame> with KeyboardHandler {
     }
   }
 
+  bool _isTileBelowTheBall(MazeTileCoordinates tileCoordinates) {
+    return tileCoordinates.angle == MazeTileAngle.zero &&
+          tileCoordinates.horizontalIndex ==
+              levelInstance.ball!.cellCoordinates.x &&
+          tileCoordinates.verticalIndex ==
+              (levelInstance.ball!.cellCoordinates.y + 1);
+  }
+
   // TODO what if there is a round in the graph of bound coordinates?
   List<MazeTileCoordinates> _getRandomUniqueCoordinates(
     int numberOfTiles,
@@ -93,12 +101,7 @@ class Maze extends BodyComponent<MazeBallGame> with KeyboardHandler {
       if (addedTileCoordinates.contains(tileCoordinates)) {
         continue;
       }
-      // if tile is below the ball
-      if (tileCoordinates.angle == MazeTileAngle.zero &&
-          tileCoordinates.horizontalIndex ==
-              levelInstance.ball!.cellCoordinates.x &&
-          tileCoordinates.verticalIndex ==
-              (levelInstance.ball!.cellCoordinates.y + 1)) {
+      if (_isTileBelowTheBall(tileCoordinates)) {
         continue;
       }
       print("tile $tileCoordinates");
