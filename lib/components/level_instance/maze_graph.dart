@@ -1,3 +1,5 @@
+import 'package:maze_ball/components/level_instance/tile/tile_coordinates.dart';
+
 class _Node {
   final List<_Node> neighbors = [];
 
@@ -77,5 +79,24 @@ class MazeCellGraph {
         edge.connect();
       }
     }
+  }
+
+  _Edge _getCorrespondentEdge(MazeTileCoordinates wallCoordinates) {
+    switch (wallCoordinates.angle) {
+      case MazeTileAngle.zero:
+        return _horizontalEdges[wallCoordinates
+            .horizontalIndex][wallCoordinates.verticalIndex - 1];
+      case MazeTileAngle.perpendicular:
+        return _verticalEdges[wallCoordinates.horizontalIndex -
+            1][wallCoordinates.verticalIndex];
+    }
+  }
+
+  void addWall(MazeTileCoordinates wallCoordinates) {
+    _getCorrespondentEdge(wallCoordinates).disconnect();
+  }
+
+  void removeWall(MazeTileCoordinates wallCoordinates) {
+    _getCorrespondentEdge(wallCoordinates).connect();
   }
 }
