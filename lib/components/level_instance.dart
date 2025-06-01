@@ -21,8 +21,8 @@ class LevelInstance extends PositionComponent
   late final MazeDimensions mazeDimensions;
   late final CellCoordinatesConverter cellCoordinatesConverter;
 
-  Ball? _ball;
-  Ball? get ball => _ball;
+  late final Ball ball;
+  late final Heart heart;
 
   @override
   FutureOr<void> onLoad() async {
@@ -37,23 +37,27 @@ class LevelInstance extends PositionComponent
     );
 
     Random theRandom = Random();
-    CellCoordinates cellCoordinates = CellCoordinates(
+    CellCoordinates ballCellCoordinates = CellCoordinates(
       theRandom.nextInt(mazeDimensions.horizontalLength),
       theRandom.nextInt(mazeDimensions.verticalLength - 1),
     );
     await add(
-      _ball = Ball(cellCoordinates: cellCoordinates, position: cellCoordinatesConverter.convert(cellCoordinates), level: level),
+      ball = Ball(
+        cellCoordinates: ballCellCoordinates,
+        position: cellCoordinatesConverter.convert(ballCellCoordinates),
+        level: level,
+      ),
     );
 
     // TODO what if heart and ball have the same coordinates?
+    CellCoordinates heartCellCoordinates = CellCoordinates(
+      theRandom.nextInt(mazeDimensions.horizontalLength),
+      theRandom.nextInt(mazeDimensions.verticalLength),
+    );
     await add(
-      Heart(
-        position: cellCoordinatesConverter.convert(
-          CellCoordinates(
-            theRandom.nextInt(mazeDimensions.horizontalLength),
-            theRandom.nextInt(mazeDimensions.verticalLength),
-          ),
-        ),
+      heart = Heart(
+        cellCoordinates: heartCellCoordinates,
+        position: cellCoordinatesConverter.convert(heartCellCoordinates),
       ),
     );
 
@@ -68,11 +72,11 @@ class LevelInstance extends PositionComponent
 
   void handleKeys(Set<LogicalKeyboardKey> keysPressed) {
     if (keysPressed.contains(LogicalKeyboardKey.arrowRight)) {
-      _ball!.body.gravityOverride?.rotate(pi / 2);
-      _ball!.body.linearVelocity.setZero();
+      ball.body.gravityOverride?.rotate(pi / 2);
+      ball.body.linearVelocity.setZero();
     } else if (keysPressed.contains(LogicalKeyboardKey.arrowLeft)) {
-      _ball!.body.gravityOverride?.rotate(-pi / 2);
-      _ball!.body.linearVelocity.setZero();
+      ball.body.gravityOverride?.rotate(-pi / 2);
+      ball.body.linearVelocity.setZero();
     }
   }
 }

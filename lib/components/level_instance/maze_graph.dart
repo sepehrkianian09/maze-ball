@@ -1,3 +1,6 @@
+import 'dart:collection';
+
+import 'package:maze_ball/components/level_instance/collectibles/cell_coordinates.dart';
 import 'package:maze_ball/components/level_instance/tile/tile_coordinates.dart';
 
 class _Node {
@@ -99,4 +102,52 @@ class MazeCellGraph {
   void removeWall(MazeTileCoordinates wallCoordinates) {
     _getCorrespondentEdge(wallCoordinates).connect();
   }
+
+  _Node _getCorrespondentNode(CellCoordinates cellCoordinates) {
+    return _nodes[cellCoordinates.x][cellCoordinates.y];
+  }
+
+  int? shortestPathBetweenCells(CellCoordinates source, CellCoordinates dest) {
+    List<_Node>? shortestPath = _bfsShortestPath(
+      _getCorrespondentNode(source),
+      _getCorrespondentNode(dest),
+    );
+
+    return shortestPath?.length;
+  }
+}
+
+List<_Node>? _bfsShortestPath(_Node start, _Node goal) {
+  Queue<_Node> queue = Queue<_Node>();
+  Map<_Node, _Node?> parent = {}; // Keeps track of path
+  Set<_Node> visited = {};
+
+  queue.add(start);
+  visited.add(start);
+  parent[start] = null;
+
+  while (queue.isNotEmpty) {
+    _Node current = queue.removeFirst();
+
+    if (current == goal) {
+      // Reconstruct path from goal to start
+      List<_Node> path = [];
+      _Node? node = goal;
+      while (node != null) {
+        path.add(node);
+        node = parent[node];
+      }
+      return path.reversed.toList(); // From start to goal
+    }
+
+    for (_Node neighbor in current.neighbors) {
+      if (!visited.contains(neighbor)) {
+        queue.add(neighbor);
+        visited.add(neighbor);
+        parent[neighbor] = current;
+      }
+    }
+  }
+
+  return null; // No path found
 }

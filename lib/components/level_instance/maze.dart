@@ -4,6 +4,7 @@ import 'package:flame/components.dart';
 import 'package:flame_forge2d/flame_forge2d.dart';
 import 'package:maze_ball/components/game.dart';
 import 'package:maze_ball/components/level_instance.dart';
+import 'package:maze_ball/components/level_instance/maze_graph.dart';
 import 'package:maze_ball/components/level_instance/tile/maze_dimensions.dart';
 
 import 'tile/tile_coordinates.dart';
@@ -78,18 +79,22 @@ class Maze extends BodyComponent<MazeBallGame> with KeyboardHandler {
 
   bool _isTileBelowTheBall(MazeTileCoordinates tileCoordinates) {
     return tileCoordinates.angle == MazeTileAngle.zero &&
-          tileCoordinates.horizontalIndex ==
-              levelInstance.ball!.cellCoordinates.x &&
-          tileCoordinates.verticalIndex ==
-              (levelInstance.ball!.cellCoordinates.y + 1);
+        tileCoordinates.horizontalIndex ==
+            levelInstance.ball.cellCoordinates.x &&
+        tileCoordinates.verticalIndex ==
+            (levelInstance.ball.cellCoordinates.y + 1);
   }
 
-  // TODO what if there is a round in the graph of bound coordinates?
   List<MazeTileCoordinates> _getRandomUniqueCoordinates(
     int numberOfTiles,
     Random theRandom,
   ) {
-    print("ball ${levelInstance.ball!.cellCoordinates}");
+    MazeCellGraph cellGraph = MazeCellGraph(
+      horizontalLength: mazeDimensions.horizontalLength,
+      verticalLength: mazeDimensions.verticalLength,
+    );
+
+    print("ball ${levelInstance.ball.cellCoordinates}");
     List<MazeTileCoordinates> addedTileCoordinates = [];
     var i = 0;
     while (i < numberOfTiles) {
@@ -104,6 +109,17 @@ class Maze extends BodyComponent<MazeBallGame> with KeyboardHandler {
       if (_isTileBelowTheBall(tileCoordinates)) {
         continue;
       }
+
+      cellGraph.addWall(tileCoordinates);
+      if (cellGraph.shortestPathBetweenCells(
+            levelInstance.ball.cellCoordinates,
+            levelInstance.heart.cellCoordinates,
+          ) ==
+          null) {
+        cellGraph.removeWall(tileCoordinates);
+        continue;
+      }
+
       print("tile $tileCoordinates");
       addedTileCoordinates.add(tileCoordinates);
       // print("added tile coordinates: $tileCoordinates");
