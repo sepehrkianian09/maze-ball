@@ -42,7 +42,10 @@ class MazeCellGraph {
   late final List<List<_Edge>> _horizontalEdges;
   late final List<List<_Edge>> _verticalEdges;
 
-  MazeCellGraph({required this.horizontalLength, required this.verticalLength}) {
+  MazeCellGraph({
+    required this.horizontalLength,
+    required this.verticalLength,
+  }) {
     _nodes = List.generate(
       horizontalLength,
       (int _) => List.generate(verticalLength, (int _) => _Node()),
@@ -55,11 +58,6 @@ class MazeCellGraph {
         (int j) => _Edge(_nodes[i][j], _nodes[i][j + 1]),
       ),
     );
-    for (var edgesColumn in _horizontalEdges) {
-      for (var edge in edgesColumn) {
-        edge.connect();
-      }
-    }
 
     _verticalEdges = List.generate(
       horizontalLength - 1,
@@ -68,7 +66,13 @@ class MazeCellGraph {
         (int j) => _Edge(_nodes[i][j], _nodes[i + 1][j]),
       ),
     );
-    for (var edgesColumn in _verticalEdges) {
+
+    _connectAllEdges(_horizontalEdges);
+    _connectAllEdges(_verticalEdges);
+  }
+
+  void _connectAllEdges(List<List<_Edge>> edges) {
+    for (var edgesColumn in edges) {
       for (var edge in edgesColumn) {
         edge.connect();
       }
