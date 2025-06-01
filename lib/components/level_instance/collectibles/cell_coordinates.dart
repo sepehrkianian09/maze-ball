@@ -7,6 +7,11 @@ class CellCoordinates {
   final int y;
 
   CellCoordinates(this.x, this.y);
+
+  @override
+  String toString() {
+    return "Cell Coordinates: ($x, $y)";
+  }
 }
 
 class CellCoordinatesConverter {
@@ -16,8 +21,14 @@ class CellCoordinatesConverter {
 
   Vector2 convert(CellCoordinates coordinates) {
     return Vector2(
-      mazeDimensions.gameWidthStart + (coordinates.x + 0.5) * mazeDimensions.gameWidth / mazeDimensions.horizontalLength,
-      mazeDimensions.gameHeightStart + (coordinates.y + 0.5) * mazeDimensions.gameHeight / mazeDimensions.verticalLength,
+      mazeDimensions.gameWidthStart +
+          (coordinates.x + 0.5) *
+              mazeDimensions.gameWidth /
+              mazeDimensions.horizontalLength,
+      mazeDimensions.gameHeightStart +
+          (coordinates.y + 0.5) *
+              mazeDimensions.gameHeight /
+              mazeDimensions.verticalLength,
     );
   }
 }

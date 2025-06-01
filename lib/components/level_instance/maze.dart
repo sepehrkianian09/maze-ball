@@ -3,6 +3,7 @@ import 'dart:math';
 import 'package:flame/components.dart';
 import 'package:flame_forge2d/flame_forge2d.dart';
 import 'package:maze_ball/components/game.dart';
+import 'package:maze_ball/components/level_instance.dart';
 import 'package:maze_ball/components/level_instance/tile/maze_dimensions.dart';
 
 import 'tile/tile_coordinates.dart';
@@ -16,13 +17,18 @@ class Maze extends BodyComponent<MazeBallGame> with KeyboardHandler {
   final MazeDimensions mazeDimensions;
   final int level;
 
-  Maze({required this.level, required this.mazeDimensions})
-    : super(
-        bodyDef: BodyDef(
-          type: BodyType.static,
-          gravityOverride: Vector2.zero(),
-        ),
-      );
+  final LevelInstance levelInstance;
+
+  Maze({
+    required this.level,
+    required this.mazeDimensions,
+    required this.levelInstance,
+  }) : super(
+         bodyDef: BodyDef(
+           type: BodyType.static,
+           gravityOverride: Vector2.zero(),
+         ),
+       );
 
   Future<void> _buildMazeBound() async {
     // add horizontal walls
@@ -75,6 +81,7 @@ class Maze extends BodyComponent<MazeBallGame> with KeyboardHandler {
     int numberOfTiles,
     Random theRandom,
   ) {
+    print("ball ${levelInstance.ball!.cellCoordinates}");
     List<MazeTileCoordinates> addedTileCoordinates = [];
     var i = 0;
     while (i < numberOfTiles) {
@@ -83,17 +90,24 @@ class Maze extends BodyComponent<MazeBallGame> with KeyboardHandler {
         mazeDimensions.horizontalLength,
         mazeDimensions.verticalLength,
       );
-      // print("tile coordinates: $tileCoordinates");
       if (addedTileCoordinates.contains(tileCoordinates)) {
         continue;
       }
+      // if tile is below the ball
+      if (tileCoordinates.angle == MazeTileAngle.zero &&
+          tileCoordinates.horizontalIndex ==
+              levelInstance.ball!.cellCoordinates.x &&
+          tileCoordinates.verticalIndex ==
+              (levelInstance.ball!.cellCoordinates.y + 1)) {
+        continue;
+      }
+      print("tile $tileCoordinates");
       addedTileCoordinates.add(tileCoordinates);
       // print("added tile coordinates: $tileCoordinates");
       i++;
     }
     return addedTileCoordinates;
   }
-
 
   Future<void> _buildRandomTiles(Random theRandom) async {
     int numberOfTiles = level + theRandom.nextInt(level);

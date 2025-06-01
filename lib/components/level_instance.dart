@@ -22,7 +22,7 @@ class LevelInstance extends PositionComponent
   late final CellCoordinatesConverter cellCoordinatesConverter;
 
   Ball? _ball;
-  get ball => _ball;
+  Ball? get ball => _ball;
 
   @override
   FutureOr<void> onLoad() async {
@@ -36,19 +36,13 @@ class LevelInstance extends PositionComponent
       mazeDimensions: mazeDimensions,
     );
 
-    await add(Maze(level: level, mazeDimensions: mazeDimensions));
-
     Random theRandom = Random();
+    CellCoordinates cellCoordinates = CellCoordinates(
+      theRandom.nextInt(mazeDimensions.horizontalLength),
+      theRandom.nextInt(mazeDimensions.verticalLength - 1),
+    );
     await add(
-      _ball = Ball(
-        position: cellCoordinatesConverter.convert(
-          CellCoordinates(
-            theRandom.nextInt(mazeDimensions.horizontalLength),
-            theRandom.nextInt(mazeDimensions.verticalLength),
-          ),
-        ),
-        level: level,
-      ),
+      _ball = Ball(cellCoordinates: cellCoordinates, position: cellCoordinatesConverter.convert(cellCoordinates), level: level),
     );
 
     // TODO what if heart and ball have the same coordinates?
@@ -61,6 +55,10 @@ class LevelInstance extends PositionComponent
           ),
         ),
       ),
+    );
+
+    await add(
+      Maze(level: level, mazeDimensions: mazeDimensions, levelInstance: this),
     );
 
     await add(MazeBallHelpers(levelInstance: this));

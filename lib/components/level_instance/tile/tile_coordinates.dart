@@ -43,4 +43,9 @@ class MazeTileCoordinates {
         );
     }
   }
+
+  @override
+  String toString() {
+    return "Tile Coordinates: ($horizontalIndex, $verticalIndex), angle: ${angle.name}";
+  }
 }
