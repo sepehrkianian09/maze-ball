@@ -12,11 +12,12 @@ class TextHelper extends PositionComponent {
     required super.position,
     required this.textShower,
     required Color color,
+    Anchor anchor = Anchor.topLeft,
   }) {
     add(
       _theComponent = TextComponent(
         position: Vector2.zero(),
-        anchor: Anchor.center,
+        anchor: anchor,
         textRenderer: TextPaint(
           style: TextStyle(
             fontSize: 2,
@@ -30,7 +31,7 @@ class TextHelper extends PositionComponent {
     add(
       OutlinedRectangleComponent(
         position: Vector2.zero(),
-        anchor: Anchor.center,
+        anchor: anchor,
         size: Vector2(10.0, 4.0),
         strokeWidth: 0.3,
       ),

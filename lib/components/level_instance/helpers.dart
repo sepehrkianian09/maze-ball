@@ -17,7 +17,7 @@ class MazeBallHelpers extends PositionComponent {
     // ball gravity
     await add(
       VectorHelper(
-        position: Vector2(20, 0),
+        position: Vector2(25, 0),
         theVector: levelInstance.ball.body.gravityOverride!,
         color: Colors.blueGrey,
         vectorName: "Gravity",
@@ -28,7 +28,7 @@ class MazeBallHelpers extends PositionComponent {
     // ball velocity
     await add(
       VectorHelper(
-        position: Vector2(10, 0),
+        position: Vector2(17, 0),
         theVector: levelInstance.ball.body.linearVelocity,
         color: Colors.blueGrey,
         vectorName: "Velocity",
@@ -39,17 +39,19 @@ class MazeBallHelpers extends PositionComponent {
     // level
     await add(
       TextHelper(
-        position: Vector2(0, -0.5),
+        position: Vector2(1, 0),
         textShower: () => "Level ${levelInstance.level}",
         color: Colors.purpleAccent,
+        anchor: Anchor.centerLeft
       ),
     );
     // score
     await add(
       TextHelper(
-        position: Vector2(0, 3.5),
+        position: Vector2(1, 4),
         textShower: () => "Score: ${levelInstance.game.getScore()}",
         color: Colors.yellowAccent,
+        anchor: Anchor.centerLeft,
       ),
     );
 
