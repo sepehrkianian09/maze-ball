@@ -67,20 +67,16 @@ class LevelInstance extends PositionComponent
       Maze(level: level, mazeDimensions: mazeDimensions, levelInstance: this),
     );
 
-    await add(
-      MazeBallHelpers(levelInstance: this, position: Vector2(-30, 30)),
-    );
+    await add(MazeBallHelpers(levelInstance: this, position: Vector2(-30, 30)));
 
     return super.onLoad();
   }
 
   void handleKeys(Set<LogicalKeyboardKey> keysPressed) {
     if (keysPressed.contains(LogicalKeyboardKey.arrowRight)) {
-      ball.body.gravityOverride?.rotate(pi / 2);
-      ball.body.linearVelocity.setZero();
+      ball.rotateRight();
     } else if (keysPressed.contains(LogicalKeyboardKey.arrowLeft)) {
-      ball.body.gravityOverride?.rotate(-pi / 2);
-      ball.body.linearVelocity.setZero();
+      ball.rotateLeft();
     }
   }
 }

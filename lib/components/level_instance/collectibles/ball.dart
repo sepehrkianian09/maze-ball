@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flame/components.dart';
 import 'package:flame_forge2d/flame_forge2d.dart';
 import 'package:flutter/material.dart';
@@ -29,4 +31,14 @@ class Ball extends BodyComponentWithUserData {
            ),
          ],
        );
+
+  void rotateRight() {
+    body.gravityOverride?.rotate(pi / 2);
+    body.linearVelocity.setZero();
+  }
+
+  void rotateLeft() {
+    body.gravityOverride?.rotate(-pi / 2);
+    body.linearVelocity.setZero();
+  }
 }
