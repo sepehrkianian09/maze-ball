@@ -2,8 +2,11 @@ import 'dart:async';
 import 'dart:math';
 
 import 'package:flame/components.dart';
+import 'package:flame/input.dart';
+import 'package:flutter/material.dart';
 import 'package:maze_ball/components/game.dart';
 import 'package:maze_ball/components/level_instance/helpers.dart';
+import 'package:maze_ball/components/level_instance/hud_keyboard.dart';
 import 'package:maze_ball/components/level_instance/maze.dart';
 
 import 'level_instance/collectibles/ball.dart';
@@ -67,6 +70,8 @@ class LevelInstance extends PositionComponent
     );
 
     await add(MazeBallHelpers(levelInstance: this, position: Vector2(-30, 30)));
+
+    await add(HudKeyboard());
 
     return super.onLoad();
   }

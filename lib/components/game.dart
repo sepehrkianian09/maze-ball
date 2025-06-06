@@ -2,9 +2,11 @@ import 'dart:async';
 
 import 'package:flame/components.dart';
 import 'package:flame/events.dart';
+import 'package:flame/input.dart';
 import 'package:flame_forge2d/flame_forge2d.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:get/get_state_manager/get_state_manager.dart';
 import 'package:maze_ball/components/level_instance.dart';
 import 'package:maze_ball/pages/game.dart';
 
@@ -25,19 +27,25 @@ class MazeBallGame extends Forge2DGame with KeyboardEvents, TapDetector {
     await world.add(Background(sprite: Sprite(backgroundImage)));
     playState = PlayState.welcome;
 
+    
+
     return super.onLoad();
   }
 
-  LevelInstance? _gameWorld;
+  LevelInstance? get levelInstance {
+    return _levelInstance;
+  }
+
+  LevelInstance? _levelInstance;
 
   void _startGame() async {
-    await world.add(_gameWorld = LevelInstance(level: _level));
+    await world.add(_levelInstance = LevelInstance(level: _level));
     print("game started");
   }
 
   void _finishGame() {
-    world.remove(_gameWorld!);
-    _gameWorld = null;
+    world.remove(_levelInstance!);
+    _levelInstance = null;
     print("game finished");
   }
 
@@ -90,9 +98,9 @@ class MazeBallGame extends Forge2DGame with KeyboardEvents, TapDetector {
     // print("event pressed $event");
     if (isKeyDown) {
       if (keysPressed.contains(LogicalKeyboardKey.arrowRight)) {
-        _gameWorld?.rightKey();
+        _levelInstance?.rightKey();
       } else if (keysPressed.contains(LogicalKeyboardKey.arrowLeft)) {
-        _gameWorld?.leftKey();
+        _levelInstance?.leftKey();
       }
       return KeyEventResult.handled;
     }
@@ -103,14 +111,14 @@ class MazeBallGame extends Forge2DGame with KeyboardEvents, TapDetector {
   bool _isPaused = false;
   @override
   void onTapDown(TapDownInfo info) {
-    if (_isPaused) {
-      _isPaused = false;
-      resumeEngine();
-      overlays.remove('Pause');
-    } else {
-      _isPaused = true;
-      overlays.add('Pause');
-      pauseEngine();
-    }
+    // if (_isPaused) {
+    //   _isPaused = false;
+    //   resumeEngine();
+    //   overlays.remove('Pause');
+    // } else {
+    //   _isPaused = true;
+    //   overlays.add('Pause');
+    //   pauseEngine();
+    // }
   }
 }

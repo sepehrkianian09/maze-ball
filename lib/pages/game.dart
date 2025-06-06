@@ -1,6 +1,5 @@
 import 'package:flame/game.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:maze_ball/components/game.dart';
 import 'package:maze_ball/overlay_screens/game_over.dart';
 import 'package:maze_ball/overlay_screens/pause.dart';
