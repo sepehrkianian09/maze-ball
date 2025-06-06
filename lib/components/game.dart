@@ -6,7 +6,6 @@ import 'package:flame/input.dart';
 import 'package:flame_forge2d/flame_forge2d.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:get/get_state_manager/get_state_manager.dart';
 import 'package:maze_ball/components/level_instance.dart';
 import 'package:maze_ball/components/level_instance/input_handler.dart';
 import 'package:maze_ball/pages/game.dart';
