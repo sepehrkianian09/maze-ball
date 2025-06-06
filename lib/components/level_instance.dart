@@ -46,11 +46,16 @@ class LevelInstance extends PositionComponent
       ),
     );
 
-    // TODO what if heart and ball have the same coordinates?
     CellCoordinates heartCellCoordinates = CellCoordinates(
       theRandom.nextInt(mazeDimensions.horizontalLength),
       theRandom.nextInt(mazeDimensions.verticalLength),
     );
+    while (heartCellCoordinates == ballCellCoordinates) {
+      heartCellCoordinates = CellCoordinates(
+        theRandom.nextInt(mazeDimensions.horizontalLength),
+        theRandom.nextInt(mazeDimensions.verticalLength),
+      );
+    }
     await add(
       heart = Heart(
         cellCoordinates: heartCellCoordinates,
