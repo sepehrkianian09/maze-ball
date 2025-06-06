@@ -68,7 +68,7 @@ class LevelInstance extends PositionComponent
     );
 
     await add(
-      MazeBallHelpers(levelInstance: this, position: Vector2(-30, 24)),
+      MazeBallHelpers(levelInstance: this, position: Vector2(-30, 30)),
     );
 
     return super.onLoad();
