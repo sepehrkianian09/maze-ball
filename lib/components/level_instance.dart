@@ -26,11 +26,7 @@ class LevelInstance extends PositionComponent
 
   @override
   FutureOr<void> onLoad() async {
-    mazeDimensions = MazeDimensions(
-      game: game,
-      horizontalLength: 4,
-      verticalLength: 4,
-    );
+    mazeDimensions = SquareMazeDimensions(game: game, level: level);
 
     cellCoordinatesConverter = CellCoordinatesConverter(
       mazeDimensions: mazeDimensions,
@@ -46,6 +42,7 @@ class LevelInstance extends PositionComponent
         cellCoordinates: ballCellCoordinates,
         position: cellCoordinatesConverter.convert(ballCellCoordinates),
         level: level,
+        radius: max(mazeDimensions.tileSpace.x, mazeDimensions.tileSpace.y),
       ),
     );
 
