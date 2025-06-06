@@ -6,13 +6,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:maze_ball/components/game.dart';
 import 'package:maze_ball/components/level_instance/helpers/text.dart';
+import 'package:maze_ball/components/level_instance/hovered_outline_hud_button.dart';
 import 'package:maze_ball/components/level_instance/input_handler.dart';
 
 class HudKeyboard extends PositionComponent
     with HasGameReference<MazeBallGame> {
   InputHandler inputHandler;
 
-  HudKeyboard({required this.inputHandler});
+  HudKeyboard({super.position, required this.inputHandler});
 
   @override
   FutureOr<void> onLoad() async {
@@ -25,7 +26,7 @@ class HudKeyboard extends PositionComponent
     );
 
     await add(
-      HudButtonComponent(
+      HoverOutlineHudButton(
         position: Vector2(0, 0),
         button: TextComponent(
           position: Vector2.zero(),
@@ -39,8 +40,8 @@ class HudKeyboard extends PositionComponent
     );
 
     await add(
-      HudButtonComponent(
-        position: Vector2(5, 0),
+      HoverOutlineHudButton(
+        position: Vector2(8, 0),
         button: TextComponent(
           position: Vector2.zero(),
           text: '→',
