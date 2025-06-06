@@ -14,7 +14,7 @@ class MazeBallGame extends Forge2DGame with KeyboardEvents {
   MazeBallGame()
     : super(
         gravity: Vector2(0, 10),
-        camera: CameraComponent.withFixedResolution(width: 800, height: 600),
+        camera: CameraComponent.withFixedResolution(width: 600, height: 800),
       ) {
     _playState = PlayState.welcome;
   }
