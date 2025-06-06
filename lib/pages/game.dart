@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:maze_ball/components/game.dart';
 import 'package:maze_ball/overlay_screens/game_over.dart';
+import 'package:maze_ball/overlay_screens/pause.dart';
 import 'package:maze_ball/overlay_screens/result.dart';
 import 'package:maze_ball/overlay_screens/welcome.dart';
 
@@ -23,6 +24,7 @@ class GamePage extends StatelessWidget {
               (context, game) => ResultOverlayScreen(game as MazeBallGame),
           PlayState.gameOver.name:
               (context, game) => GameOverOverlayScreen(game as MazeBallGame),
+          'Pause': (context, game) => PauseOverlayScreen(),
         },
       ),
     );

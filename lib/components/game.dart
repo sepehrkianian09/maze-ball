@@ -10,7 +10,7 @@ import 'package:maze_ball/pages/game.dart';
 
 import 'background.dart';
 
-class MazeBallGame extends Forge2DGame with KeyboardEvents {
+class MazeBallGame extends Forge2DGame with KeyboardEvents, TapDetector {
   MazeBallGame()
     : super(
         gravity: Vector2(0, 10),
@@ -31,9 +31,7 @@ class MazeBallGame extends Forge2DGame with KeyboardEvents {
   LevelInstance? _gameWorld;
 
   void _startGame() async {
-    await world.add(
-      _gameWorld = LevelInstance(level: _level),
-    );
+    await world.add(_gameWorld = LevelInstance(level: _level));
     print("game started");
   }
 
@@ -97,5 +95,19 @@ class MazeBallGame extends Forge2DGame with KeyboardEvents {
     }
 
     return KeyEventResult.ignored;
+  }
+
+  bool _isPaused = false;
+  @override
+  void onTapDown(TapDownInfo info) {
+    if (_isPaused) {
+      _isPaused = false;
+      resumeEngine();
+      overlays.remove('Pause');
+    } else {
+      _isPaused = true;
+      overlays.add('Pause');
+      pauseEngine();
+    }
   }
 }
