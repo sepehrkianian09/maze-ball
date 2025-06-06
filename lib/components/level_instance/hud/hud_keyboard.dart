@@ -6,7 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:maze_ball/components/game.dart';
 import 'package:maze_ball/components/level_instance/helpers/text.dart';
-import 'package:maze_ball/components/level_instance/hovered_outline_hud_button.dart';
+import 'package:maze_ball/components/level_instance/hud/hovered_outline_hud_button.dart';
 import 'package:maze_ball/components/level_instance/input_handler.dart';
 
 class HudKeyboard extends PositionComponent

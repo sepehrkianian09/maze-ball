@@ -7,7 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/src/services/keyboard_key.g.dart';
 import 'package:maze_ball/components/game.dart';
 import 'package:maze_ball/components/level_instance/helpers.dart';
-import 'package:maze_ball/components/level_instance/hud_keyboard.dart';
+import 'package:maze_ball/components/level_instance/hud/hud_keyboard.dart';
 import 'package:maze_ball/components/level_instance/input_handler.dart';
 import 'package:maze_ball/components/level_instance/maze.dart';
 
