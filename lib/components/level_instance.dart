@@ -2,7 +2,6 @@ import 'dart:async';
 import 'dart:math';
 
 import 'package:flame/components.dart';
-import 'package:flutter/services.dart';
 import 'package:maze_ball/components/game.dart';
 import 'package:maze_ball/components/level_instance/helpers.dart';
 import 'package:maze_ball/components/level_instance/maze.dart';
@@ -72,11 +71,11 @@ class LevelInstance extends PositionComponent
     return super.onLoad();
   }
 
-  void handleKeys(Set<LogicalKeyboardKey> keysPressed) {
-    if (keysPressed.contains(LogicalKeyboardKey.arrowRight)) {
-      ball.rotateRight();
-    } else if (keysPressed.contains(LogicalKeyboardKey.arrowLeft)) {
-      ball.rotateLeft();
-    }
+  void rightKey() {
+    ball.rotateRight();
+  }
+
+  void leftKey() {
+    ball.rotateLeft();
   }
 }

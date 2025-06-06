@@ -88,9 +88,12 @@ class MazeBallGame extends Forge2DGame with KeyboardEvents, TapDetector {
     final isKeyDown = event is KeyDownEvent;
 
     // print("event pressed $event");
-
     if (isKeyDown) {
-      _gameWorld?.handleKeys(keysPressed);
+      if (keysPressed.contains(LogicalKeyboardKey.arrowRight)) {
+        _gameWorld?.rightKey();
+      } else if (keysPressed.contains(LogicalKeyboardKey.arrowLeft)) {
+        _gameWorld?.leftKey();
+      }
       return KeyEventResult.handled;
     }
 
