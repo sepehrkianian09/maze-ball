@@ -29,6 +29,6 @@ class WelcomeOverlayScreen extends StatelessWidget {
   }
 
   void startGame() {
-    game.playState = PlayState.playing;
+    game.playState = PlayState.play;
   }
 }

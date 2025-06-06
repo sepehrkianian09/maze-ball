@@ -34,6 +34,6 @@ class GameOverOverlayScreen extends StatelessWidget {
   }
 
   void startGame() {
-    game.playState = PlayState.playing;
+    game.playState = PlayState.play;
   }
 }

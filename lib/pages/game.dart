@@ -3,10 +3,13 @@ import 'package:flutter/material.dart';
 import 'package:maze_ball/components/game.dart';
 import 'package:maze_ball/overlay_screens/game_over.dart';
 import 'package:maze_ball/overlay_screens/pause.dart';
+import 'package:maze_ball/overlay_screens/playing.dart';
 import 'package:maze_ball/overlay_screens/result.dart';
 import 'package:maze_ball/overlay_screens/welcome.dart';
 
-enum PlayState { welcome, playing, won, gameOver }
+enum PlayState { welcome, play, won, gameOver }
+
+enum PlayingState { playing, pause }
 
 class GamePage extends StatelessWidget {
   const GamePage({super.key});
@@ -23,7 +26,10 @@ class GamePage extends StatelessWidget {
               (context, game) => ResultOverlayScreen(game as MazeBallGame),
           PlayState.gameOver.name:
               (context, game) => GameOverOverlayScreen(game as MazeBallGame),
-          'Pause': (context, game) => PauseOverlayScreen(),
+          PlayingState.playing.name:
+              (context, game) => PlayingOverlayScreen(game as MazeBallGame),
+          PlayingState.pause.name:
+              (context, game) => PauseOverlayScreen(game as MazeBallGame),
         },
       ),
     );

@@ -20,6 +20,7 @@ class MazeBallGame extends Forge2DGame with KeyboardEvents, TapDetector {
         camera: CameraComponent.withFixedResolution(width: 600, height: 800),
       ) {
     _playState = PlayState.welcome;
+    _playingState = PlayingState.playing;
   }
 
   @override
@@ -69,7 +70,7 @@ class MazeBallGame extends Forge2DGame with KeyboardEvents, TapDetector {
       case PlayState.gameOver:
         overlays.remove(_playState.name);
         break;
-      case PlayState.playing:
+      case PlayState.play:
         _finishGame();
         break;
     }
@@ -80,9 +81,34 @@ class MazeBallGame extends Forge2DGame with KeyboardEvents, TapDetector {
       case PlayState.welcome:
         overlays.add(_playState.name);
         break;
-      case PlayState.playing:
+      case PlayState.play:
         _level = 1;
         _startGame();
+        playingState = PlayingState.playing;
+        break;
+    }
+  }
+
+  late PlayingState _playingState;
+  PlayingState get playingState => _playingState;
+  set playingState(PlayingState playingState) {
+    switch (_playingState) {
+      case PlayingState.pause:
+        resumeEngine();
+        overlays.remove(_playingState.name);
+        break;
+      case PlayingState.playing:
+        overlays.remove(_playingState.name);
+        break;
+    }
+    _playingState = playingState;
+    switch (_playingState) {
+      case PlayingState.pause:
+        pauseEngine();
+        overlays.add(_playingState.name);
+        break;
+      case PlayingState.playing:
+        overlays.add(_playingState.name);
         break;
     }
   }
