@@ -133,18 +133,4 @@ class MazeBallGame extends Forge2DGame with KeyboardEvents, TapDetector {
 
     return KeyEventResult.ignored;
   }
-
-  bool _isPaused = false;
-  @override
-  void onTapDown(TapDownInfo info) {
-    // if (_isPaused) {
-    //   _isPaused = false;
-    //   resumeEngine();
-    //   overlays.remove('Pause');
-    // } else {
-    //   _isPaused = true;
-    //   overlays.add('Pause');
-    //   pauseEngine();
-    // }
-  }
 }
