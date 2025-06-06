@@ -4,9 +4,11 @@ import 'dart:math';
 import 'package:flame/components.dart';
 import 'package:flame/input.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/src/services/keyboard_key.g.dart';
 import 'package:maze_ball/components/game.dart';
 import 'package:maze_ball/components/level_instance/helpers.dart';
 import 'package:maze_ball/components/level_instance/hud_keyboard.dart';
+import 'package:maze_ball/components/level_instance/input_handler.dart';
 import 'package:maze_ball/components/level_instance/maze.dart';
 
 import 'level_instance/collectibles/ball.dart';
@@ -15,7 +17,8 @@ import 'level_instance/collectibles/heart.dart';
 import 'level_instance/tile/maze_dimensions.dart';
 
 class LevelInstance extends PositionComponent
-    with HasGameReference<MazeBallGame> {
+    with HasGameReference<MazeBallGame>
+    implements InputHandler {
   final int level;
 
   LevelInstance({required this.level});
@@ -71,16 +74,20 @@ class LevelInstance extends PositionComponent
 
     await add(MazeBallHelpers(levelInstance: this, position: Vector2(-30, 30)));
 
-    await add(HudKeyboard());
+    await add(HudKeyboard(inputHandler: this));
 
     return super.onLoad();
   }
 
-  void rightKey() {
-    ball.rotateRight();
-  }
-
-  void leftKey() {
-    ball.rotateLeft();
+  @override
+  void handleKey(LogicalKeyboardKey key) {
+    switch (key) {
+      case LogicalKeyboardKey.arrowRight:
+        ball.rotateRight();
+        break;
+      case LogicalKeyboardKey.arrowLeft:
+        ball.rotateLeft();
+        break;
+    }
   }
 }

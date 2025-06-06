@@ -8,6 +8,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get_state_manager/get_state_manager.dart';
 import 'package:maze_ball/components/level_instance.dart';
+import 'package:maze_ball/components/level_instance/input_handler.dart';
 import 'package:maze_ball/pages/game.dart';
 
 import 'background.dart';
@@ -26,8 +27,6 @@ class MazeBallGame extends Forge2DGame with KeyboardEvents, TapDetector {
     final backgroundImage = await images.load('background/colored_grass.png');
     await world.add(Background(sprite: Sprite(backgroundImage)));
     playState = PlayState.welcome;
-
-    
 
     return super.onLoad();
   }
@@ -88,6 +87,10 @@ class MazeBallGame extends Forge2DGame with KeyboardEvents, TapDetector {
     }
   }
 
+  InputHandler get _inputHandler {
+    return levelInstance!;
+  }
+
   @override
   KeyEventResult onKeyEvent(
     KeyEvent event,
@@ -97,10 +100,8 @@ class MazeBallGame extends Forge2DGame with KeyboardEvents, TapDetector {
 
     // print("event pressed $event");
     if (isKeyDown) {
-      if (keysPressed.contains(LogicalKeyboardKey.arrowRight)) {
-        _levelInstance?.rightKey();
-      } else if (keysPressed.contains(LogicalKeyboardKey.arrowLeft)) {
-        _levelInstance?.leftKey();
+      for (var keyPressed in keysPressed) {
+        _inputHandler.handleKey(keyPressed);
       }
       return KeyEventResult.handled;
     }

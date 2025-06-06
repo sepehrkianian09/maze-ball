@@ -3,11 +3,17 @@ import 'dart:async';
 import 'package:flame/components.dart';
 import 'package:flame/input.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:maze_ball/components/game.dart';
 import 'package:maze_ball/components/level_instance/helpers/text.dart';
+import 'package:maze_ball/components/level_instance/input_handler.dart';
 
 class HudKeyboard extends PositionComponent
     with HasGameReference<MazeBallGame> {
+  InputHandler inputHandler;
+
+  HudKeyboard({required this.inputHandler});
+
   @override
   FutureOr<void> onLoad() async {
     final textRenderer = TextPaint(
@@ -27,7 +33,7 @@ class HudKeyboard extends PositionComponent
           textRenderer: textRenderer,
         ),
         onPressed: () {
-          game.levelInstance?.rightKey();
+          inputHandler.handleKey(LogicalKeyboardKey.arrowLeft);
         },
       ),
     );
@@ -41,7 +47,7 @@ class HudKeyboard extends PositionComponent
           textRenderer: textRenderer,
         ),
         onPressed: () {
-          game.levelInstance?.leftKey();
+          inputHandler.handleKey(LogicalKeyboardKey.arrowRight);
         },
       ),
     );
