@@ -10,37 +10,36 @@ import 'helpers/vector.dart';
 class MazeBallHelpers extends PositionComponent {
   final LevelInstance levelInstance;
 
-  MazeBallHelpers({required this.levelInstance});
+  MazeBallHelpers({required this.levelInstance, required super.position});
 
   @override
   FutureOr<void> onLoad() async {
-    
     // ball gravity
     await add(
       VectorHelper(
-        position: Vector2(32.5, 22.5),
-        theVector: levelInstance.ball!.body.gravityOverride!,
+        position: Vector2(20, 0),
+        theVector: levelInstance.ball.body.gravityOverride!,
         color: Colors.blueGrey,
         vectorName: "Gravity",
         textColor: Colors.black,
       ),
     );
-    
+
     // ball velocity
     await add(
       VectorHelper(
-        position: Vector2(22.5, 22.5),
-        theVector: levelInstance.ball!.body.linearVelocity,
+        position: Vector2(10, 0),
+        theVector: levelInstance.ball.body.linearVelocity,
         color: Colors.blueGrey,
         vectorName: "Velocity",
         textColor: Colors.black87,
       ),
     );
-    
+
     // level
     await add(
       TextHelper(
-        position: Vector2(12.5, 22),
+        position: Vector2(0, -0.5),
         textShower: () => "Level ${levelInstance.level}",
         color: Colors.purpleAccent,
       ),
@@ -48,7 +47,7 @@ class MazeBallHelpers extends PositionComponent {
     // score
     await add(
       TextHelper(
-        position: Vector2(12.5, 26),
+        position: Vector2(0, 3.5),
         textShower: () => "Score: ${levelInstance.game.getScore()}",
         color: Colors.yellowAccent,
       ),
