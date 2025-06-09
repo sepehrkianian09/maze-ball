@@ -28,7 +28,7 @@ class LevelSelectionOverlayScreen extends StatelessWidget {
               mainAxisSize: MainAxisSize.min,
               spacing: 10.0,
               children: [
-                SizedBox(width: 500, child: _levelGrid()),
+                Flexible(child: SizedBox(width: 500, child: _levelGrid())),
                 OutlinedButton(
                   onPressed: () {
                     game.playState = PlayState.welcome;
