@@ -17,7 +17,7 @@ class HudKeyboard extends PositionComponent
   FutureOr<void> onLoad() async {
     final textRenderer = TextPaint(
       style: TextStyle(
-        fontSize: 5,
+        fontSize: 7,
         color: Colors.black,
         fontWeight: FontWeight.bold,
       ),
