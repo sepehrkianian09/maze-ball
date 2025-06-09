@@ -2,7 +2,7 @@ import 'dart:async';
 
 import 'package:flame/components.dart';
 import 'package:flutter/material.dart';
-import 'package:maze_ball/components/level_instance.dart';
+import 'package:maze_ball/game_components/level_instance.dart';
 
 import 'helpers/text.dart';
 import 'helpers/vector.dart';

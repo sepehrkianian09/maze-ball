@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get_navigation/get_navigation.dart';
 import 'package:maze_ball/configure.dart';
-import 'package:maze_ball/pages/game.dart';
+import 'package:maze_ball/game_components/game_page.dart';
 
 Future<void> main() async {
   await Configure().specify();

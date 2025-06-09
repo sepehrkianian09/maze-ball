@@ -6,10 +6,10 @@ import 'package:flame_forge2d/flame_forge2d.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
-import 'package:maze_ball/components/level_instance.dart';
-import 'package:maze_ball/components/level_instance/input_handler.dart';
+import 'package:maze_ball/game_components/level_instance.dart';
+import 'package:maze_ball/game_components/level_instance/input_handler.dart';
 import 'package:maze_ball/controllers/level.dart';
-import 'package:maze_ball/pages/game.dart';
+import 'package:maze_ball/game_components/game_page.dart';
 
 import 'background.dart';
 

@@ -4,12 +4,12 @@ import 'dart:math';
 import 'package:flame/components.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:maze_ball/components/game.dart';
-import 'package:maze_ball/components/level_instance/helpers.dart';
-import 'package:maze_ball/components/level_instance/helpers/position.dart';
-import 'package:maze_ball/components/level_instance/hud/hud_keyboard.dart';
-import 'package:maze_ball/components/level_instance/input_handler.dart';
-import 'package:maze_ball/components/level_instance/maze.dart';
+import 'package:maze_ball/game_components/game.dart';
+import 'package:maze_ball/game_components/level_instance/helpers.dart';
+import 'package:maze_ball/game_components/level_instance/helpers/position.dart';
+import 'package:maze_ball/game_components/level_instance/hud/hud_keyboard.dart';
+import 'package:maze_ball/game_components/level_instance/input_handler.dart';
+import 'package:maze_ball/game_components/level_instance/maze.dart';
 
 import 'level_instance/collectibles/ball.dart';
 import 'level_instance/collectibles/cell_coordinates.dart';

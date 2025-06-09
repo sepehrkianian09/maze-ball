@@ -1,12 +1,12 @@
 import 'package:flame/game.dart';
 import 'package:flutter/material.dart';
-import 'package:maze_ball/components/game.dart';
-import 'package:maze_ball/overlay_screens/play_state/game_over.dart';
-import 'package:maze_ball/overlay_screens/play_state/level_selection.dart';
-import 'package:maze_ball/overlay_screens/playing_state/pause.dart';
-import 'package:maze_ball/overlay_screens/playing_state/playing.dart';
-import 'package:maze_ball/overlay_screens/play_state/result.dart';
-import 'package:maze_ball/overlay_screens/play_state/welcome.dart';
+import 'package:maze_ball/game_components/game.dart';
+import 'package:maze_ball/game_components/overlay_screens/play_state/game_over.dart';
+import 'package:maze_ball/game_components/overlay_screens/play_state/level_selection.dart';
+import 'package:maze_ball/game_components/overlay_screens/playing_state/pause.dart';
+import 'package:maze_ball/game_components/overlay_screens/playing_state/playing.dart';
+import 'package:maze_ball/game_components/overlay_screens/play_state/result.dart';
+import 'package:maze_ball/game_components/overlay_screens/play_state/welcome.dart';
 
 enum PlayState { welcome, selectLevel, play, won, gameOver }
 
