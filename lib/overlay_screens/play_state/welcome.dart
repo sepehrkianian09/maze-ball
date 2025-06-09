@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 import 'package:maze_ball/game.dart';
 import 'package:maze_ball/controllers/level.dart';
-import 'package:maze_ball/overlay_screens/utils.dart';
 import 'package:maze_ball/game_page.dart';
 
 class WelcomeOverlayScreen extends StatelessWidget {
