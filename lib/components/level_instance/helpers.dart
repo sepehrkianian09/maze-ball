@@ -42,16 +42,6 @@ class MazeBallHelpers extends PositionComponent {
         position: Vector2(1, 0),
         textShower: () => "Level ${levelInstance.level}",
         color: Colors.purpleAccent,
-        anchor: Anchor.centerLeft
-      ),
-    );
-    // score
-    await add(
-      TextHelper(
-        position: Vector2(1, 4),
-        textShower: () => "Score: ${levelInstance.game.getScore()}",
-        color: Colors.yellowAccent,
-        anchor: Anchor.centerLeft,
       ),
     );
 

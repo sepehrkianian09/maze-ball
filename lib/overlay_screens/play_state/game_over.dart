@@ -28,7 +28,7 @@ class GameOverOverlayScreen extends StatelessWidget {
               spacing: 10.0,
               children: [
                 Text("Game Over"),
-                Text("Score: ${game.getScore()}"),
+                Text("Lost on level ${game.level}"),
                 OutlinedButton(
                   onPressed: () {
                     game.playState = PlayState.welcome;

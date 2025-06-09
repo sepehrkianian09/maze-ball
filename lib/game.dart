@@ -54,6 +54,7 @@ class MazeBallGame extends Forge2DGame with KeyboardEvents, TapDetector {
   final int maxLevel = 16;
 
   int _level = 1;
+  int get level => _level;
   set level(int level) {
     _level = level;
   }
@@ -71,10 +72,6 @@ class MazeBallGame extends Forge2DGame with KeyboardEvents, TapDetector {
     _finishGame();
     _level += 1;
     _startGame();
-  }
-
-  int getScore() {
-    return _level - 1;
   }
 
   late PlayState _playState;
