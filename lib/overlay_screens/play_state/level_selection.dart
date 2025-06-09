@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:maze_ball/components/game.dart';
@@ -7,7 +9,7 @@ import 'package:maze_ball/pages/game.dart';
 class LevelSelectionOverlayScreen extends StatelessWidget {
   final MazeBallGame game;
 
-  const LevelSelectionOverlayScreen(this.game, {super.key});
+  LevelSelectionOverlayScreen(this.game, {super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -41,6 +43,13 @@ class LevelSelectionOverlayScreen extends StatelessWidget {
     );
   }
 
+  final List<Color> difficultyColors = [
+    Colors.orangeAccent,
+    Colors.deepOrangeAccent,
+    Colors.redAccent,
+    Colors.deepPurpleAccent,
+  ];
+
   Widget _levelGrid() {
     return GridView.builder(
       shrinkWrap: true,
@@ -56,6 +65,10 @@ class LevelSelectionOverlayScreen extends StatelessWidget {
           alignment: Alignment.center,
           // color: Colors.blueAccent,
           child: ElevatedButton(
+            style: ElevatedButton.styleFrom(
+              backgroundColor: difficultyColors[sqrt(index + 1).ceil() - 1],
+              foregroundColor: Colors.white,
+            ),
             onPressed: () {
               game.level = index + 1;
               game.playState = PlayState.play;
