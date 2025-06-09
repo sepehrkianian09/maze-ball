@@ -1,7 +1,7 @@
 import 'dart:collection';
 
-import 'package:maze_ball/game_components/level_instance/collectibles/cell_coordinates.dart';
-import 'package:maze_ball/game_components/level_instance/tile/tile_coordinates.dart';
+import 'package:maze_ball/components/level_instance/collectibles/cell_coordinates.dart';
+import 'package:maze_ball/components/level_instance/tile/tile_coordinates.dart';
 
 class _Node {
   final List<_Node> neighbors = [];

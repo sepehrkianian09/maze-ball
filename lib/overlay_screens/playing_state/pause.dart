@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import 'package:maze_ball/game_components/game.dart';
-import 'package:maze_ball/game_components/game_page.dart';
+import 'package:maze_ball/game.dart';
+import 'package:maze_ball/game_page.dart';
 
 class PauseOverlayScreen extends StatelessWidget {
   final MazeBallGame game;

@@ -2,10 +2,10 @@ import 'dart:math';
 
 import 'package:flame/components.dart';
 import 'package:flame_forge2d/flame_forge2d.dart';
-import 'package:maze_ball/game_components/game.dart';
-import 'package:maze_ball/game_components/level_instance.dart';
-import 'package:maze_ball/game_components/level_instance/maze_graph.dart';
-import 'package:maze_ball/game_components/level_instance/tile/maze_dimensions.dart';
+import 'package:maze_ball/game.dart';
+import 'package:maze_ball/components/level_instance.dart';
+import 'package:maze_ball/components/level_instance/maze_graph.dart';
+import 'package:maze_ball/components/level_instance/tile/maze_dimensions.dart';
 
 import 'tile/tile_coordinates.dart';
 import 'tile/tile_factory.dart';

@@ -1,6 +1,6 @@
 import 'dart:math';
 import 'package:flame/components.dart';
-import 'game.dart';
+import '../game.dart';
 
 class Background extends SpriteComponent with HasGameReference<MazeBallGame> {
   Background({required super.sprite})

@@ -1,10 +1,10 @@
 import 'package:flame/components.dart';
 import 'package:flame_forge2d/flame_forge2d.dart';
 import 'package:flutter/material.dart';
-import 'package:maze_ball/game_components/level_instance/collectibles/ball.dart';
-import 'package:maze_ball/game_components/level_instance/collectibles/cell_coordinates.dart';
-import 'package:maze_ball/game_components/utils/body_component_with_user_data.dart';
-import 'package:maze_ball/game_components/game.dart';
+import 'package:maze_ball/components/level_instance/collectibles/ball.dart';
+import 'package:maze_ball/components/level_instance/collectibles/cell_coordinates.dart';
+import 'package:maze_ball/components/utils/body_component_with_user_data.dart';
+import 'package:maze_ball/game.dart';
 
 class Heart extends BodyComponentWithUserData<MazeBallGame>
     with ContactCallbacks {
