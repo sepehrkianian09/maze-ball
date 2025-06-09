@@ -1,13 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:get/get.dart';
 import 'package:maze_ball/components/game.dart';
+import 'package:maze_ball/controllers/level.dart';
 import 'package:maze_ball/overlay_screens/utils.dart';
 import 'package:maze_ball/pages/game.dart';
 
 class WelcomeOverlayScreen extends StatelessWidget {
   final MazeBallGame game;
 
-  const WelcomeOverlayScreen(this.game, {super.key});
+  WelcomeOverlayScreen(this.game, {super.key});
+
+  final _levelController = Get.find<LevelController>();
 
   @override
   Widget build(BuildContext context) {
@@ -27,6 +31,16 @@ class WelcomeOverlayScreen extends StatelessWidget {
               spacing: 10.0,
               children: [
                 OutlinedButton(
+                  onPressed:
+                      _levelController.isLevelSaved()
+                          ? () {
+                            game.level = _levelController.retrieveLevel();
+                            game.playState = PlayState.play;
+                          }
+                          : null,
+                  child: const Text("Continue"),
+                ),
+                OutlinedButton(
                   onPressed: () {
                     game.level = 1;
                     game.playState = PlayState.play;
@@ -38,12 +52,6 @@ class WelcomeOverlayScreen extends StatelessWidget {
                     game.playState = PlayState.selectLevel;
                   },
                   child: const Text("Select Level"),
-                ),
-                OutlinedButton(
-                  onPressed: () {
-                    // TODO: get the level from storage
-                  },
-                  child: const Text("Continue"),
                 ),
               ],
             ),

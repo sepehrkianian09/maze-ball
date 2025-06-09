@@ -5,13 +5,17 @@ import 'package:flame/input.dart';
 import 'package:flame_forge2d/flame_forge2d.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:get/get.dart';
 import 'package:maze_ball/components/level_instance.dart';
 import 'package:maze_ball/components/level_instance/input_handler.dart';
+import 'package:maze_ball/controllers/level.dart';
 import 'package:maze_ball/pages/game.dart';
 
 import 'background.dart';
 
 class MazeBallGame extends Forge2DGame with KeyboardEvents, TapDetector {
+  final _levelController = Get.find<LevelController>();
+
   MazeBallGame()
     : super(
         gravity: Vector2(0, 10),
@@ -80,6 +84,10 @@ class MazeBallGame extends Forge2DGame with KeyboardEvents, TapDetector {
       case PlayState.play:
         _startGame();
         playingState = PlayingState.playing;
+        break;
+      case PlayState.gameOver:
+        _levelController.saveLevel(_level);
+        overlays.add(_playState.name);
         break;
       default:
         overlays.add(_playState.name);

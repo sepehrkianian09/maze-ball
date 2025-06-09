@@ -11,4 +11,8 @@ class LevelController {
   int retrieveLevel() {
     return _levelService.retrieveLevel();
   }
+
+  bool isLevelSaved() {
+    return _levelService.isLevelSaved();
+  }
 }

@@ -14,4 +14,8 @@ class LevelService {
   int retrieveLevel() {
     return _storage.get(_levelKey);
   }
+
+  bool isLevelSaved() {
+    return _storage.containsKey(_levelKey);
+  }
 }
