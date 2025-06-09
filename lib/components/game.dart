@@ -1,7 +1,6 @@
 import 'dart:async';
 
 import 'package:flame/components.dart';
-import 'package:flame/events.dart';
 import 'package:flame/input.dart';
 import 'package:flame_forge2d/flame_forge2d.dart';
 import 'package:flutter/material.dart';
@@ -48,7 +47,12 @@ class MazeBallGame extends Forge2DGame with KeyboardEvents, TapDetector {
     print("game finished");
   }
 
+  final int maxLevel = 16;
+
   int _level = 1;
+  set level(int level) {
+    _level = level;
+  }
 
   void goToNextLevel() {
     _finishGame();
@@ -64,26 +68,21 @@ class MazeBallGame extends Forge2DGame with KeyboardEvents, TapDetector {
   PlayState get playState => _playState;
   set playState(PlayState playState) {
     switch (_playState) {
-      case PlayState.welcome:
-      case PlayState.won:
-      case PlayState.gameOver:
-        overlays.remove(_playState.name);
-        break;
       case PlayState.play:
         _finishGame();
+        break;
+      default:
+        overlays.remove(_playState.name);
         break;
     }
     _playState = playState;
     switch (_playState) {
-      case PlayState.won:
-      case PlayState.gameOver:
-      case PlayState.welcome:
-        overlays.add(_playState.name);
-        break;
       case PlayState.play:
-        _level = 1;
         _startGame();
         playingState = PlayingState.playing;
+        break;
+      default:
+        overlays.add(_playState.name);
         break;
     }
   }

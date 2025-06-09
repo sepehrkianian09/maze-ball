@@ -2,12 +2,13 @@ import 'package:flame/game.dart';
 import 'package:flutter/material.dart';
 import 'package:maze_ball/components/game.dart';
 import 'package:maze_ball/overlay_screens/play_state/game_over.dart';
+import 'package:maze_ball/overlay_screens/play_state/level_selection.dart';
 import 'package:maze_ball/overlay_screens/playing_state/pause.dart';
 import 'package:maze_ball/overlay_screens/playing_state/playing.dart';
 import 'package:maze_ball/overlay_screens/play_state/result.dart';
 import 'package:maze_ball/overlay_screens/play_state/welcome.dart';
 
-enum PlayState { welcome, play, won, gameOver }
+enum PlayState { welcome, selectLevel, play, won, gameOver }
 
 enum PlayingState { playing, pause }
 
@@ -22,6 +23,9 @@ class GamePage extends StatelessWidget {
         overlayBuilderMap: {
           PlayState.welcome.name:
               (context, game) => WelcomeOverlayScreen(game as MazeBallGame),
+          PlayState.selectLevel.name:
+              (context, game) =>
+                  LevelSelectionOverlayScreen(game as MazeBallGame),
           PlayState.won.name:
               (context, game) => ResultOverlayScreen(game as MazeBallGame),
           PlayState.gameOver.name:

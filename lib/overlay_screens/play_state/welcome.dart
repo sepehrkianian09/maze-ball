@@ -19,16 +19,33 @@ class WelcomeOverlayScreen extends StatelessWidget {
           painter: CircularPainter(),
         ),
         Center(
-          child: ElevatedButton(
-            onPressed: startGame,
-            child: Text("Start Game"),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            spacing: 10.0,
+            children: [
+              OutlinedButton(
+                onPressed: () {
+                  game.level = 1;
+                  game.playState = PlayState.play;
+                },
+                child: Text("Start Game"),
+              ),
+              OutlinedButton(
+                onPressed: () {
+                  game.playState = PlayState.selectLevel;
+                },
+                child: const Text("Select Level"),
+              ),
+              OutlinedButton(
+                onPressed: () {
+                  // TODO: get the level from storage
+                },
+                child: const Text("Continue"),
+              ),
+            ],
           ),
         ),
       ],
     );
-  }
-
-  void startGame() {
-    game.playState = PlayState.play;
   }
 }

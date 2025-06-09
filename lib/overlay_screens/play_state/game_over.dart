@@ -22,18 +22,20 @@ class GameOverOverlayScreen extends StatelessWidget {
         Center(
           child: Column(
             mainAxisSize: MainAxisSize.min,
+            spacing: 10.0,
             children: [
               Text("Game Over"),
               Text("Score: ${game.getScore()}"),
-              ElevatedButton(onPressed: startGame, child: Text("Start Over")),
+              OutlinedButton(
+                onPressed: () {
+                  game.playState = PlayState.welcome;
+                },
+                child: Text("Return"),
+              ),
             ],
           ),
         ),
       ],
     );
-  }
-
-  void startGame() {
-    game.playState = PlayState.play;
   }
 }

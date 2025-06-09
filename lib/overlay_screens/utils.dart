@@ -13,6 +13,10 @@ class CircularWhiteBackground extends StatelessWidget {
 }
 
 class CircularPainter extends CustomPainter {
+  final double shrinkRatio;
+
+  CircularPainter({this.shrinkRatio = 4.0});
+
   @override
   void paint(Canvas canvas, Size size) {
     // Fill the background with black
@@ -22,7 +26,7 @@ class CircularPainter extends CustomPainter {
     // Draw a circular white area in the center
     final whiteCirclePaint = Paint()..color = Colors.white;
     final center = Offset(size.width / 2, size.height / 2);
-    final radius = size.shortestSide / 4; // Adjust as needed
+    final radius = size.shortestSide / shrinkRatio; // Adjust as needed
     canvas.drawCircle(center, radius, whiteCirclePaint);
   }
 
