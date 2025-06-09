@@ -5,7 +5,7 @@ import 'package:maze_ball/overlay_screens/play_state/game_over.dart';
 import 'package:maze_ball/overlay_screens/play_state/level_selection.dart';
 import 'package:maze_ball/overlay_screens/playing_state/pause.dart';
 import 'package:maze_ball/overlay_screens/playing_state/playing.dart';
-import 'package:maze_ball/overlay_screens/play_state/result.dart';
+import 'package:maze_ball/overlay_screens/play_state/won.dart';
 import 'package:maze_ball/overlay_screens/play_state/welcome.dart';
 
 enum PlayState { welcome, selectLevel, play, won, gameOver }
@@ -27,7 +27,7 @@ class GamePage extends StatelessWidget {
               (context, game) =>
                   LevelSelectionOverlayScreen(game as MazeBallGame),
           PlayState.won.name:
-              (context, game) => ResultOverlayScreen(game as MazeBallGame),
+              (context, game) => WonOverlayScreen(game as MazeBallGame),
           PlayState.gameOver.name:
               (context, game) => GameOverOverlayScreen(game as MazeBallGame),
           PlayingState.playing.name:

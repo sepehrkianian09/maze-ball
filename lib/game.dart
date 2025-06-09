@@ -60,7 +60,6 @@ class MazeBallGame extends Forge2DGame with KeyboardEvents, TapDetector {
 
   void wonCurrentLevel() {
     if (_level == maxLevel) {
-      _finishGame();
       playState = PlayState.won;
       return;
     }
