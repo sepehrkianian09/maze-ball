@@ -2,9 +2,11 @@ import 'dart:async';
 import 'dart:math';
 
 import 'package:flame/components.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:maze_ball/components/game.dart';
 import 'package:maze_ball/components/level_instance/helpers.dart';
+import 'package:maze_ball/components/level_instance/helpers/position.dart';
 import 'package:maze_ball/components/level_instance/hud/hud_keyboard.dart';
 import 'package:maze_ball/components/level_instance/input_handler.dart';
 import 'package:maze_ball/components/level_instance/maze.dart';
@@ -49,6 +51,15 @@ class LevelInstance extends PositionComponent
       ),
     );
 
+    await add(
+      PositionHelper(
+        positionFunction: () => ball.position,
+        squareSideLength: ball.radius,
+        name: "Ball",
+        color: Colors.yellowAccent,
+      ),
+    );
+
     CellCoordinates heartCellCoordinates = CellCoordinates(
       theRandom.nextInt(mazeDimensions.horizontalLength),
       theRandom.nextInt(mazeDimensions.verticalLength),
@@ -63,6 +74,14 @@ class LevelInstance extends PositionComponent
       heart = Heart(
         cellCoordinates: heartCellCoordinates,
         position: cellCoordinatesConverter.convert(heartCellCoordinates),
+      ),
+    );
+    await add(
+      PositionHelper(
+        positionFunction: () => heart.position,
+        squareSideLength: heart.radius,
+        name: "Heart",
+        color: Colors.deepPurpleAccent,
       ),
     );
 

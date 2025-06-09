@@ -9,11 +9,13 @@ import 'package:maze_ball/components/utils/body_component_with_user_data.dart';
 class Ball extends BodyComponentWithUserData {
   final CellCoordinates cellCoordinates;
 
+  final double radius;
+
   Ball({
     required this.cellCoordinates,
     required Vector2 position,
     required int level,
-    required double radius,
+    required this.radius,
   }) : super(
          bodyDef: BodyDef(
            type: BodyType.dynamic,
