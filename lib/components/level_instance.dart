@@ -91,7 +91,7 @@ class LevelInstance extends PositionComponent
 
     await add(MazeBallHelpers(levelInstance: this, position: Vector2(-30, 30)));
 
-    await add(HudKeyboard(inputHandler: this, position: Vector2(10, 24)));
+    await add(HudKeyboard(inputHandler: this, position: Vector2(9.0, 24)));
 
     return super.onLoad();
   }

@@ -19,15 +19,13 @@ class HoverOutlineHudButton extends HudButtonComponent with HoverCallbacks {
   void render(Canvas canvas) {
     super.render(canvas);
 
-    if (isHovered) {
-      final rect = button!.toRect();
-      final paint =
-          Paint()
-            ..color = Colors.yellow
-            ..style = PaintingStyle.stroke
-            ..strokeWidth = 3;
+    final rect = button!.toRect();
+    final paint =
+        Paint()
+          ..color = (isHovered ? Colors.yellow : Colors.blue)
+          ..style = PaintingStyle.stroke
+          ..strokeWidth = 1;
 
-      canvas.drawRect(rect, paint);
-    }
+    canvas.drawRect(rect, paint);
   }
 }
