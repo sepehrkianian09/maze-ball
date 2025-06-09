@@ -18,4 +18,8 @@ class LevelService {
   bool isLevelSaved() {
     return _storage.containsKey(_levelKey);
   }
+
+  void deleteSavedLevel() {
+    _storage.remove(_levelKey);
+  }
 }

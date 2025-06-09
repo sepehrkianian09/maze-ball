@@ -15,4 +15,8 @@ class LevelController {
   bool isLevelSaved() {
     return _levelService.isLevelSaved();
   }
+
+  void deleteSavedLevel() {
+    return _levelService.deleteSavedLevel();
+  }
 }
