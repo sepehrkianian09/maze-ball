@@ -14,35 +14,39 @@ class WelcomeOverlayScreen extends StatelessWidget {
     return Stack(
       children: [
         Container(color: Colors.black),
-        CustomPaint(
-          size: MediaQuery.of(context).size,
-          painter: CircularPainter(),
-        ),
         Center(
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            spacing: 10.0,
-            children: [
-              OutlinedButton(
-                onPressed: () {
-                  game.level = 1;
-                  game.playState = PlayState.play;
-                },
-                child: Text("Start Game"),
-              ),
-              OutlinedButton(
-                onPressed: () {
-                  game.playState = PlayState.selectLevel;
-                },
-                child: const Text("Select Level"),
-              ),
-              OutlinedButton(
-                onPressed: () {
-                  // TODO: get the level from storage
-                },
-                child: const Text("Continue"),
-              ),
-            ],
+          child: Container(
+            decoration: BoxDecoration(
+              color: Colors.white,
+              border: Border.all(color: Colors.black45, width: 2.0),
+              shape: BoxShape.circle,
+            ),
+            padding: EdgeInsets.all(32.0),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              spacing: 10.0,
+              children: [
+                OutlinedButton(
+                  onPressed: () {
+                    game.level = 1;
+                    game.playState = PlayState.play;
+                  },
+                  child: Text("Start Game"),
+                ),
+                OutlinedButton(
+                  onPressed: () {
+                    game.playState = PlayState.selectLevel;
+                  },
+                  child: const Text("Select Level"),
+                ),
+                OutlinedButton(
+                  onPressed: () {
+                    // TODO: get the level from storage
+                  },
+                  child: const Text("Continue"),
+                ),
+              ],
+            ),
           ),
         ),
       ],

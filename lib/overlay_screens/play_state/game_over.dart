@@ -15,24 +15,28 @@ class GameOverOverlayScreen extends StatelessWidget {
     return Stack(
       children: [
         Container(color: Colors.black),
-        CustomPaint(
-          size: MediaQuery.of(context).size,
-          painter: CircularPainter(),
-        ),
         Center(
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            spacing: 10.0,
-            children: [
-              Text("Game Over"),
-              Text("Score: ${game.getScore()}"),
-              OutlinedButton(
-                onPressed: () {
-                  game.playState = PlayState.welcome;
-                },
-                child: Text("Return"),
-              ),
-            ],
+          child: Container(
+            decoration: BoxDecoration(
+              color: Colors.white,
+              border: Border.all(color: Colors.black45, width: 2.0),
+              shape: BoxShape.circle,
+            ),
+            padding: EdgeInsets.all(32.0),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              spacing: 10.0,
+              children: [
+                Text("Game Over"),
+                Text("Score: ${game.getScore()}"),
+                OutlinedButton(
+                  onPressed: () {
+                    game.playState = PlayState.welcome;
+                  },
+                  child: Text("Return"),
+                ),
+              ],
+            ),
           ),
         ),
       ],
