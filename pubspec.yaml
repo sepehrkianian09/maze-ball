@@ -13,6 +13,9 @@ dependencies:
   flame_forge2d: ^0.19.0+1
   get: # Use latest version
 
+  hive_ce: # no version specified
+  hive_ce_flutter: # no version specified
+
 
 dev_dependencies:
   flutter_test:

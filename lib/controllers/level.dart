@@ -1,0 +1,14 @@
+import 'package:get/get.dart';
+import 'package:maze_ball/services/level.dart';
+
+class LevelController {
+  final _levelService = Get.find<LevelService>();
+
+  void saveLevel(int level) {
+    _levelService.saveLevel(level);
+  }
+
+  int retrieveLevel() {
+    return _levelService.retrieveLevel();
+  }
+}
