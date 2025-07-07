@@ -1,5 +1,7 @@
 # Maze Ball
-The purpose of this game is about helping a ball reach a heart. Both heart and ball are balls trapped in a maze. The ball moves with a gravity which direction you can change.
+The snapshot of the game is shown in the picture below. The purpose of this game is about helping a ball reach a heart. Both heart and ball are balls trapped in a maze. The ball moves with a gravity which direction you can change.
+
+![Game Snapshot](/assets/readme/game-snapshot.png)
 
 You can rotate the direction of the gravity by +90 or -90 degrees. You can change them by pressing right or left arrow in your keyboard, or pressing the -90 and +90 buttons on the screen. It is good to know that the magnitude of the gravity does not change. Moreover, the velocity of the ball gets zeroed every time you change the direction. 
 
@@ -22,4 +24,4 @@ As mentioned in the previous paragraphs, you can play the game with a keyboard o
 
 Moreover, there are game helpers inside the game. At the bottom left of the game screen there are three helpers. The first one shows the level of the game. The second one shows the velocity of the ball you are directing, both in terms of direction and magnitude. Third, there is a helper for the direction and magnitude of the gravity that controls the ball.
 
-Finally, you can check the game online in this [address](https://maze-ball-game.web.app/).
+Finally, you can check the game online in this [address](https://maze-ball-game.web.app).
