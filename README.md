@@ -1,7 +1,7 @@
 # Maze Ball
 The snapshot of the game is shown in the picture below. The purpose of this game is about helping a ball reach a heart. Both heart and ball are balls trapped in a maze. The ball moves with a gravity which direction you can change.
 
-![Game Snapshot](/assets/readme/game-snapshot.png)
+<img src="./assets/readme/game-snapshot.png" alt="Game Snapshot" width="400" style="display: flex; margin: 20px auto;"/>
 
 You can rotate the direction of the gravity by +90 or -90 degrees. You can change them by pressing right or left arrow in your keyboard, or pressing the -90 and +90 buttons on the screen. It is good to know that the magnitude of the gravity does not change. Moreover, the velocity of the ball gets zeroed every time you change the direction. 
 
